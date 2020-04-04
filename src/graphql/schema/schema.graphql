@@ -1,0 +1,22 @@
+# import * from '../../generated/schema/schema-prisma-client.graphql'
+# import * from '../../model/prisma/datamodel.graphql'
+# import * from '../../model/prisma/directives.graphql'
+# import * from '../../model/prisma/enums.graphql'
+# import * from './inputs.graphql'
+
+type Query {
+  currentUser: User @authenticated
+  users: [User!]! @hasRole(role: ADMIN)
+  posts: [Post!]! @authenticated
+  editorials: [Editorial!]! @authenticated
+}
+
+type Mutation {
+  signIn(data: SignInInput!): User
+  signUp(data: SignUpInput!): User
+}
+
+input SignInInput {
+  email: String!
+  password: String!
+}

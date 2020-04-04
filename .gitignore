@@ -1,0 +1,15 @@
+# Generated files
+*.log
+.build/
+dist/
+node_modules/
+offline-cache/
+src/generated/resolvers/tmp
+
+# Local configurations
+.env
+
+# Editors
+.idea
+.vscode
+*.iml

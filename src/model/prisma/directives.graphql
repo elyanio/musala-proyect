@@ -1,0 +1,15 @@
+# auth directives
+directive @hasRole(
+  role: Role! = USER,
+) on QUERY | FIELD | MUTATION | FIELD_DEFINITION
+directive @authenticated on QUERY | FIELD | MUTATION | FIELD_DEFINITION
+directive @isOwner(type: ModelTypes!) on QUERY | FIELD | MUTATION | FIELD_DEFINITION
+
+# prisma directives
+scalar DefaultValue
+directive @id on OBJECT | FIELD_DEFINITION
+directive @createdAt on OBJECT | FIELD_DEFINITION
+directive @default(
+  value: DefaultValue,
+) on OBJECT | FIELD_DEFINITION
+directive @unique on OBJECT | FIELD_DEFINITION

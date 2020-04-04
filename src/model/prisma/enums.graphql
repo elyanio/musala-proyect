@@ -1,0 +1,18 @@
+enum Role {
+  ADMIN
+  WRITER
+  EDITOR
+  USER
+}
+
+enum ModelTypes {
+  USER
+  POST
+  EDITORIAL
+}
+
+enum AccountState {
+  PENDING
+  ACTIVE
+  DISABLED
+}

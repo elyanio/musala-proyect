@@ -1,0 +1,17 @@
+input SignInInput {
+  email: String!
+  password: String!
+}
+
+input SignUpInput {
+  email: String!
+  name: String!
+  password: String!
+  role: SignUpRoleEnum!
+}
+
+enum SignUpRoleEnum {
+  WRITER
+  EDITOR
+  USER
+}

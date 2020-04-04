@@ -1,0 +1,7 @@
+*.log
+.build/
+dist/
+src/generated/
+node_modules/
+offline-cache/
+src/generated/resolvers/tmp
