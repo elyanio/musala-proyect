@@ -2,21 +2,7 @@
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-export const typeDefs = /* GraphQL */ `enum AccountState {
-  PENDING
-  ACTIVE
-  DISABLED
-}
-
-type AggregateEditorial {
-  count: Int!
-}
-
-type AggregatePost {
-  count: Int!
-}
-
-type AggregateUser {
+export const typeDefs = /* GraphQL */ `type AggregateUser {
   count: Int!
 }
 
@@ -26,174 +12,9 @@ type BatchPayload {
 
 scalar DateTime
 
-type Editorial {
-  id: ID!
-  email: String!
-  name: String!
-  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
-}
-
-type EditorialConnection {
-  pageInfo: PageInfo!
-  edges: [EditorialEdge]!
-  aggregate: AggregateEditorial!
-}
-
-input EditorialCreateInput {
-  id: ID
-  email: String!
-  name: String!
-  posts: PostCreateManyWithoutEditorialInput
-}
-
-input EditorialCreateOneWithoutPostsInput {
-  create: EditorialCreateWithoutPostsInput
-  connect: EditorialWhereUniqueInput
-}
-
-input EditorialCreateWithoutPostsInput {
-  id: ID
-  email: String!
-  name: String!
-}
-
-type EditorialEdge {
-  node: Editorial!
-  cursor: String!
-}
-
-enum EditorialOrderByInput {
-  id_ASC
-  id_DESC
-  email_ASC
-  email_DESC
-  name_ASC
-  name_DESC
-}
-
-type EditorialPreviousValues {
-  id: ID!
-  email: String!
-  name: String!
-}
-
-type EditorialSubscriptionPayload {
-  mutation: MutationType!
-  node: Editorial
-  updatedFields: [String!]
-  previousValues: EditorialPreviousValues
-}
-
-input EditorialSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: EditorialWhereInput
-  AND: [EditorialSubscriptionWhereInput!]
-  OR: [EditorialSubscriptionWhereInput!]
-  NOT: [EditorialSubscriptionWhereInput!]
-}
-
-input EditorialUpdateInput {
-  email: String
-  name: String
-  posts: PostUpdateManyWithoutEditorialInput
-}
-
-input EditorialUpdateManyMutationInput {
-  email: String
-  name: String
-}
-
-input EditorialUpdateOneRequiredWithoutPostsInput {
-  create: EditorialCreateWithoutPostsInput
-  update: EditorialUpdateWithoutPostsDataInput
-  upsert: EditorialUpsertWithoutPostsInput
-  connect: EditorialWhereUniqueInput
-}
-
-input EditorialUpdateWithoutPostsDataInput {
-  email: String
-  name: String
-}
-
-input EditorialUpsertWithoutPostsInput {
-  update: EditorialUpdateWithoutPostsDataInput!
-  create: EditorialCreateWithoutPostsInput!
-}
-
-input EditorialWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  email: String
-  email_not: String
-  email_in: [String!]
-  email_not_in: [String!]
-  email_lt: String
-  email_lte: String
-  email_gt: String
-  email_gte: String
-  email_contains: String
-  email_not_contains: String
-  email_starts_with: String
-  email_not_starts_with: String
-  email_ends_with: String
-  email_not_ends_with: String
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  posts_every: PostWhereInput
-  posts_some: PostWhereInput
-  posts_none: PostWhereInput
-  AND: [EditorialWhereInput!]
-  OR: [EditorialWhereInput!]
-  NOT: [EditorialWhereInput!]
-}
-
-input EditorialWhereUniqueInput {
-  id: ID
-  email: String
-}
-
 scalar Long
 
 type Mutation {
-  createEditorial(data: EditorialCreateInput!): Editorial!
-  updateEditorial(data: EditorialUpdateInput!, where: EditorialWhereUniqueInput!): Editorial
-  updateManyEditorials(data: EditorialUpdateManyMutationInput!, where: EditorialWhereInput): BatchPayload!
-  upsertEditorial(where: EditorialWhereUniqueInput!, create: EditorialCreateInput!, update: EditorialUpdateInput!): Editorial!
-  deleteEditorial(where: EditorialWhereUniqueInput!): Editorial
-  deleteManyEditorials(where: EditorialWhereInput): BatchPayload!
-  createPost(data: PostCreateInput!): Post!
-  updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
-  updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
-  upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
-  deletePost(where: PostWhereUniqueInput!): Post
-  deleteManyPosts(where: PostWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -219,315 +40,7 @@ type PageInfo {
   endCursor: String
 }
 
-type Post {
-  id: ID!
-  createdAt: DateTime!
-  published: Boolean!
-  title: String!
-  author: User!
-  editorial: Editorial!
-  body: String!
-}
-
-type PostConnection {
-  pageInfo: PageInfo!
-  edges: [PostEdge]!
-  aggregate: AggregatePost!
-}
-
-input PostCreateInput {
-  id: ID
-  published: Boolean
-  title: String!
-  author: UserCreateOneWithoutPostsInput!
-  editorial: EditorialCreateOneWithoutPostsInput!
-  body: String!
-}
-
-input PostCreateManyWithoutAuthorInput {
-  create: [PostCreateWithoutAuthorInput!]
-  connect: [PostWhereUniqueInput!]
-}
-
-input PostCreateManyWithoutEditorialInput {
-  create: [PostCreateWithoutEditorialInput!]
-  connect: [PostWhereUniqueInput!]
-}
-
-input PostCreateWithoutAuthorInput {
-  id: ID
-  published: Boolean
-  title: String!
-  editorial: EditorialCreateOneWithoutPostsInput!
-  body: String!
-}
-
-input PostCreateWithoutEditorialInput {
-  id: ID
-  published: Boolean
-  title: String!
-  author: UserCreateOneWithoutPostsInput!
-  body: String!
-}
-
-type PostEdge {
-  node: Post!
-  cursor: String!
-}
-
-enum PostOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  published_ASC
-  published_DESC
-  title_ASC
-  title_DESC
-  body_ASC
-  body_DESC
-}
-
-type PostPreviousValues {
-  id: ID!
-  createdAt: DateTime!
-  published: Boolean!
-  title: String!
-  body: String!
-}
-
-input PostScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  published: Boolean
-  published_not: Boolean
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  body: String
-  body_not: String
-  body_in: [String!]
-  body_not_in: [String!]
-  body_lt: String
-  body_lte: String
-  body_gt: String
-  body_gte: String
-  body_contains: String
-  body_not_contains: String
-  body_starts_with: String
-  body_not_starts_with: String
-  body_ends_with: String
-  body_not_ends_with: String
-  AND: [PostScalarWhereInput!]
-  OR: [PostScalarWhereInput!]
-  NOT: [PostScalarWhereInput!]
-}
-
-type PostSubscriptionPayload {
-  mutation: MutationType!
-  node: Post
-  updatedFields: [String!]
-  previousValues: PostPreviousValues
-}
-
-input PostSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: PostWhereInput
-  AND: [PostSubscriptionWhereInput!]
-  OR: [PostSubscriptionWhereInput!]
-  NOT: [PostSubscriptionWhereInput!]
-}
-
-input PostUpdateInput {
-  published: Boolean
-  title: String
-  author: UserUpdateOneRequiredWithoutPostsInput
-  editorial: EditorialUpdateOneRequiredWithoutPostsInput
-  body: String
-}
-
-input PostUpdateManyDataInput {
-  published: Boolean
-  title: String
-  body: String
-}
-
-input PostUpdateManyMutationInput {
-  published: Boolean
-  title: String
-  body: String
-}
-
-input PostUpdateManyWithoutAuthorInput {
-  create: [PostCreateWithoutAuthorInput!]
-  delete: [PostWhereUniqueInput!]
-  connect: [PostWhereUniqueInput!]
-  set: [PostWhereUniqueInput!]
-  disconnect: [PostWhereUniqueInput!]
-  update: [PostUpdateWithWhereUniqueWithoutAuthorInput!]
-  upsert: [PostUpsertWithWhereUniqueWithoutAuthorInput!]
-  deleteMany: [PostScalarWhereInput!]
-  updateMany: [PostUpdateManyWithWhereNestedInput!]
-}
-
-input PostUpdateManyWithoutEditorialInput {
-  create: [PostCreateWithoutEditorialInput!]
-  delete: [PostWhereUniqueInput!]
-  connect: [PostWhereUniqueInput!]
-  set: [PostWhereUniqueInput!]
-  disconnect: [PostWhereUniqueInput!]
-  update: [PostUpdateWithWhereUniqueWithoutEditorialInput!]
-  upsert: [PostUpsertWithWhereUniqueWithoutEditorialInput!]
-  deleteMany: [PostScalarWhereInput!]
-  updateMany: [PostUpdateManyWithWhereNestedInput!]
-}
-
-input PostUpdateManyWithWhereNestedInput {
-  where: PostScalarWhereInput!
-  data: PostUpdateManyDataInput!
-}
-
-input PostUpdateWithoutAuthorDataInput {
-  published: Boolean
-  title: String
-  editorial: EditorialUpdateOneRequiredWithoutPostsInput
-  body: String
-}
-
-input PostUpdateWithoutEditorialDataInput {
-  published: Boolean
-  title: String
-  author: UserUpdateOneRequiredWithoutPostsInput
-  body: String
-}
-
-input PostUpdateWithWhereUniqueWithoutAuthorInput {
-  where: PostWhereUniqueInput!
-  data: PostUpdateWithoutAuthorDataInput!
-}
-
-input PostUpdateWithWhereUniqueWithoutEditorialInput {
-  where: PostWhereUniqueInput!
-  data: PostUpdateWithoutEditorialDataInput!
-}
-
-input PostUpsertWithWhereUniqueWithoutAuthorInput {
-  where: PostWhereUniqueInput!
-  update: PostUpdateWithoutAuthorDataInput!
-  create: PostCreateWithoutAuthorInput!
-}
-
-input PostUpsertWithWhereUniqueWithoutEditorialInput {
-  where: PostWhereUniqueInput!
-  update: PostUpdateWithoutEditorialDataInput!
-  create: PostCreateWithoutEditorialInput!
-}
-
-input PostWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  published: Boolean
-  published_not: Boolean
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  author: UserWhereInput
-  editorial: EditorialWhereInput
-  body: String
-  body_not: String
-  body_in: [String!]
-  body_not_in: [String!]
-  body_lt: String
-  body_lte: String
-  body_gt: String
-  body_gte: String
-  body_contains: String
-  body_not_contains: String
-  body_starts_with: String
-  body_not_starts_with: String
-  body_ends_with: String
-  body_not_ends_with: String
-  AND: [PostWhereInput!]
-  OR: [PostWhereInput!]
-  NOT: [PostWhereInput!]
-}
-
-input PostWhereUniqueInput {
-  id: ID
-}
-
 type Query {
-  editorial(where: EditorialWhereUniqueInput!): Editorial
-  editorials(where: EditorialWhereInput, orderBy: EditorialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Editorial]!
-  editorialsConnection(where: EditorialWhereInput, orderBy: EditorialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EditorialConnection!
-  post(where: PostWhereUniqueInput!): Post
-  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
-  postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -535,21 +48,17 @@ type Query {
 }
 
 type Subscription {
-  editorial(where: EditorialSubscriptionWhereInput): EditorialSubscriptionPayload
-  post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
 type User {
   id: ID!
   email: String!
-  name: String!
+  fullName: String!
   password: String!
   role: String!
   createdAt: DateTime!
-  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   token: String
-  accountState: AccountState!
 }
 
 type UserConnection {
@@ -561,27 +70,10 @@ type UserConnection {
 input UserCreateInput {
   id: ID
   email: String!
-  name: String!
-  password: String!
-  role: String!
-  posts: PostCreateManyWithoutAuthorInput
-  token: String
-  accountState: AccountState
-}
-
-input UserCreateOneWithoutPostsInput {
-  create: UserCreateWithoutPostsInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateWithoutPostsInput {
-  id: ID
-  email: String!
-  name: String!
+  fullName: String!
   password: String!
   role: String!
   token: String
-  accountState: AccountState
 }
 
 type UserEdge {
@@ -594,8 +86,8 @@ enum UserOrderByInput {
   id_DESC
   email_ASC
   email_DESC
-  name_ASC
-  name_DESC
+  fullName_ASC
+  fullName_DESC
   password_ASC
   password_DESC
   role_ASC
@@ -604,19 +96,16 @@ enum UserOrderByInput {
   createdAt_DESC
   token_ASC
   token_DESC
-  accountState_ASC
-  accountState_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   email: String!
-  name: String!
+  fullName: String!
   password: String!
   role: String!
   createdAt: DateTime!
   token: String
-  accountState: AccountState!
 }
 
 type UserSubscriptionPayload {
@@ -639,42 +128,18 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateInput {
   email: String
-  name: String
+  fullName: String
   password: String
   role: String
-  posts: PostUpdateManyWithoutAuthorInput
   token: String
-  accountState: AccountState
 }
 
 input UserUpdateManyMutationInput {
   email: String
-  name: String
+  fullName: String
   password: String
   role: String
   token: String
-  accountState: AccountState
-}
-
-input UserUpdateOneRequiredWithoutPostsInput {
-  create: UserCreateWithoutPostsInput
-  update: UserUpdateWithoutPostsDataInput
-  upsert: UserUpsertWithoutPostsInput
-  connect: UserWhereUniqueInput
-}
-
-input UserUpdateWithoutPostsDataInput {
-  email: String
-  name: String
-  password: String
-  role: String
-  token: String
-  accountState: AccountState
-}
-
-input UserUpsertWithoutPostsInput {
-  update: UserUpdateWithoutPostsDataInput!
-  create: UserCreateWithoutPostsInput!
 }
 
 input UserWhereInput {
@@ -706,20 +171,20 @@ input UserWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
+  fullName: String
+  fullName_not: String
+  fullName_in: [String!]
+  fullName_not_in: [String!]
+  fullName_lt: String
+  fullName_lte: String
+  fullName_gt: String
+  fullName_gte: String
+  fullName_contains: String
+  fullName_not_contains: String
+  fullName_starts_with: String
+  fullName_not_starts_with: String
+  fullName_ends_with: String
+  fullName_not_ends_with: String
   password: String
   password_not: String
   password_in: [String!]
@@ -756,9 +221,6 @@ input UserWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  posts_every: PostWhereInput
-  posts_some: PostWhereInput
-  posts_none: PostWhereInput
   token: String
   token_not: String
   token_in: [String!]
@@ -773,10 +235,6 @@ input UserWhereInput {
   token_not_starts_with: String
   token_ends_with: String
   token_not_ends_with: String
-  accountState: AccountState
-  accountState_not: AccountState
-  accountState_in: [AccountState!]
-  accountState_not_in: [AccountState!]
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
