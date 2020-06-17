@@ -1,16 +1,9 @@
 export enum RolesEnum {
-  'ADMIN' = 'ADMIN',
+  'HOST' = 'HOST',
   'USER' = 'USER',
 }
 
 export enum ModelEnum {
   'USER' = 'USER',
-  'POST' = 'POST',
-  'EDITORIAL' = 'EDITORIAL',
 }
 
-export enum AccountStateEnum {
-  'PENDING' = 'PENDING',
-  'ACTIVE' = 'ACTIVE',
-  'DISABLED' = 'DISABLED',
-}

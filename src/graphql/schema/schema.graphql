@@ -6,9 +6,6 @@
 
 type Query {
   currentUser: User @authenticated
-  users: [User!]! @hasRole(role: ADMIN)
-  posts: [Post!]! @authenticated
-  editorials: [Editorial!]! @authenticated
 }
 
 type Mutation {
@@ -18,5 +15,11 @@ type Mutation {
 
 input SignInInput {
   email: String!
+  password: String!
+}
+
+input SignUpInput {
+  email: String!
+  fullName: String!
   password: String!
 }
