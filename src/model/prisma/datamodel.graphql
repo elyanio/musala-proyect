@@ -1,28 +1,9 @@
-type Post {
-  id: ID! @id
-  createdAt: DateTime! @createdAt
-  published: Boolean! @default(value: false)
-  title: String!
-  author: User!
-  editorial: Editorial!
-  body: String!
-}
-
 type User {
   id: ID! @id
   email: String! @unique
-  name: String!
+  fullName: String!
   password: String!
   role: String!
   createdAt: DateTime! @createdAt
-  posts: [Post!]!
-  token: String @authenticated
-  accountState: AccountState! @default(value: PENDING)
-}
-
-type Editorial {
-  id: ID! @id
-  email: String! @unique
-  name: String!
-  posts: [Post!]!
+  token: String
 }

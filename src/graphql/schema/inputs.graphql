@@ -5,13 +5,11 @@ input SignInInput {
 
 input SignUpInput {
   email: String!
-  name: String!
+  fullName: String!
   password: String!
-  role: SignUpRoleEnum!
 }
 
 enum SignUpRoleEnum {
-  WRITER
-  EDITOR
+  HOST
   USER
 }

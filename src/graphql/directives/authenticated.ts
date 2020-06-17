@@ -1,6 +1,5 @@
 import { Context } from '../../context';
 import CustomError from '../../model/error/CustomError';
-import { AccountStateEnum } from '../../model';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const authenticated: any = (
@@ -9,9 +8,9 @@ const authenticated: any = (
   _: any,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   __: any,
-  { currentUser }: Context
+  { currentUser }: Context,
 ) => {
-  if (currentUser && currentUser.accountState === AccountStateEnum.ACTIVE) return next();
+  if (currentUser) return next();
   throw new CustomError('UNAUTHENTICATED');
 };
 

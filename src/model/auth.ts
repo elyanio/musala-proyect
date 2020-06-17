@@ -14,24 +14,6 @@ export const userOwnerOf= async (id: string, modelTypes: ModelEnum): Promise<Use
   switch (modelTypes) {
     case ModelEnum.USER:
       return prisma.user({ id });
-    case ModelEnum.POST:
-    {
-      const usersPost = await prisma.users({
-        where: {
-          posts_some: { id }
-        }
-      });
-      return usersPost.length > 0 ? usersPost[0] : null;
-    }
-    case ModelEnum.EDITORIAL:
-    {
-      const usersEditorial = await prisma.users({
-        where: {
-          posts_some: { editorial: { id } }
-        }
-      });
-      return usersEditorial.length > 0 ? usersEditorial[0] : null;
-    }
     default:
       return null;
   }
