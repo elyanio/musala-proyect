@@ -8,6 +8,7 @@ export const typeDefs = /* GraphQL */ `type Ad {
   description: String!
   image: String!
   price: Int!
+  ranking: Float!
   host: User!
   createdAt: DateTime!
 }
@@ -24,6 +25,7 @@ input AdCreateInput {
   description: String!
   image: String!
   price: Int!
+  ranking: Float!
   host: UserCreateOneInput!
 }
 
@@ -43,6 +45,8 @@ enum AdOrderByInput {
   image_DESC
   price_ASC
   price_DESC
+  ranking_ASC
+  ranking_DESC
   createdAt_ASC
   createdAt_DESC
 }
@@ -53,6 +57,7 @@ type AdPreviousValues {
   description: String!
   image: String!
   price: Int!
+  ranking: Float!
   createdAt: DateTime!
 }
 
@@ -79,6 +84,7 @@ input AdUpdateInput {
   description: String
   image: String
   price: Int
+  ranking: Float
   host: UserUpdateOneRequiredInput
 }
 
@@ -87,6 +93,7 @@ input AdUpdateManyMutationInput {
   description: String
   image: String
   price: Int
+  ranking: Float
 }
 
 input AdWhereInput {
@@ -154,6 +161,14 @@ input AdWhereInput {
   price_lte: Int
   price_gt: Int
   price_gte: Int
+  ranking: Float
+  ranking_not: Float
+  ranking_in: [Float!]
+  ranking_not_in: [Float!]
+  ranking_lt: Float
+  ranking_lte: Float
+  ranking_gt: Float
+  ranking_gte: Float
   host: UserWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
