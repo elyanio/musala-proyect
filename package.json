@@ -1,10 +1,10 @@
 {
-  "name": "Taxi-api",
+  "name": "musala-proyect",
   "version": "1.0.0",
   "engines": {
     "node": "^12.16.1"
   },
-  "description": "taxi manager",
+  "description": "Musala text proyect",
   "license": "MIT",
   "scripts": {
     "start": "dotenv -- node 'dist/index.js'",
@@ -69,6 +69,7 @@
     "apollo-server-express": "^2.11.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
+    "dotenv-cli": "^3.1.0",
     "express": "^4.17.1",
     "graphql": "^14.6.0",
     "graphql-depth-limit": "^1.1.0",

@@ -13,14 +13,3 @@ type Mutation {
   signIn(data: SignInInput!): User
   signUp(data: SignUpInput!): User
 }
-
-input SignInInput {
-  email: String!
-  password: String!
-}
-
-input SignUpInput {
-  email: String!
-  fullName: String!
-  password: String!
-}
