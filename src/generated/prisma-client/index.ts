@@ -16,6 +16,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
+  ad: (where?: AdWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -38,6 +39,25 @@ export interface Prisma {
    * Queries
    */
 
+  ad: (where: AdWhereUniqueInput) => AdNullablePromise;
+  ads: (args?: {
+    where?: AdWhereInput;
+    orderBy?: AdOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Ad>;
+  adsConnection: (args?: {
+    where?: AdWhereInput;
+    orderBy?: AdOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => AdConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -63,6 +83,22 @@ export interface Prisma {
    * Mutations
    */
 
+  createAd: (data: AdCreateInput) => AdPromise;
+  updateAd: (args: {
+    data: AdUpdateInput;
+    where: AdWhereUniqueInput;
+  }) => AdPromise;
+  updateManyAds: (args: {
+    data: AdUpdateManyMutationInput;
+    where?: AdWhereInput;
+  }) => BatchPayloadPromise;
+  upsertAd: (args: {
+    where: AdWhereUniqueInput;
+    create: AdCreateInput;
+    update: AdUpdateInput;
+  }) => AdPromise;
+  deleteAd: (where: AdWhereUniqueInput) => AdPromise;
+  deleteManyAds: (where?: AdWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -88,6 +124,7 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  ad: (where?: AdSubscriptionWhereInput) => AdSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -100,6 +137,22 @@ export interface ClientConstructor<T> {
 /**
  * Types
  */
+
+export type AdOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "title_ASC"
+  | "title_DESC"
+  | "description_ASC"
+  | "description_DESC"
+  | "image_ASC"
+  | "image_DESC"
+  | "price_ASC"
+  | "price_DESC"
+  | "ranking_ASC"
+  | "ranking_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -119,6 +172,126 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export type AdWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface UserUpdateOneRequiredInput {
+  create?: Maybe<UserCreateInput>;
+  update?: Maybe<UserUpdateDataInput>;
+  upsert?: Maybe<UserUpsertNestedInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateInput {
+  email?: Maybe<String>;
+  fullName?: Maybe<String>;
+  password?: Maybe<String>;
+  role?: Maybe<String>;
+  token?: Maybe<String>;
+}
+
+export interface AdUpdateInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  image?: Maybe<String>;
+  price?: Maybe<Int>;
+  ranking?: Maybe<Float>;
+  host?: Maybe<UserUpdateOneRequiredInput>;
+}
+
+export interface AdWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  image?: Maybe<String>;
+  image_not?: Maybe<String>;
+  image_in?: Maybe<String[] | String>;
+  image_not_in?: Maybe<String[] | String>;
+  image_lt?: Maybe<String>;
+  image_lte?: Maybe<String>;
+  image_gt?: Maybe<String>;
+  image_gte?: Maybe<String>;
+  image_contains?: Maybe<String>;
+  image_not_contains?: Maybe<String>;
+  image_starts_with?: Maybe<String>;
+  image_not_starts_with?: Maybe<String>;
+  image_ends_with?: Maybe<String>;
+  image_not_ends_with?: Maybe<String>;
+  price?: Maybe<Int>;
+  price_not?: Maybe<Int>;
+  price_in?: Maybe<Int[] | Int>;
+  price_not_in?: Maybe<Int[] | Int>;
+  price_lt?: Maybe<Int>;
+  price_lte?: Maybe<Int>;
+  price_gt?: Maybe<Int>;
+  price_gte?: Maybe<Int>;
+  ranking?: Maybe<Float>;
+  ranking_not?: Maybe<Float>;
+  ranking_in?: Maybe<Float[] | Float>;
+  ranking_not_in?: Maybe<Float[] | Float>;
+  ranking_lt?: Maybe<Float>;
+  ranking_lte?: Maybe<Float>;
+  ranking_gt?: Maybe<Float>;
+  ranking_gte?: Maybe<Float>;
+  host?: Maybe<UserWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<AdWhereInput[] | AdWhereInput>;
+  OR?: Maybe<AdWhereInput[] | AdWhereInput>;
+  NOT?: Maybe<AdWhereInput[] | AdWhereInput>;
+}
+
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   email: String;
@@ -128,12 +301,54 @@ export interface UserCreateInput {
   token?: Maybe<String>;
 }
 
-export interface UserUpdateInput {
+export interface UserUpdateManyMutationInput {
   email?: Maybe<String>;
   fullName?: Maybe<String>;
   password?: Maybe<String>;
   role?: Maybe<String>;
   token?: Maybe<String>;
+}
+
+export interface AdCreateInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  description: String;
+  image: String;
+  price: Int;
+  ranking: Float;
+  host: UserCreateOneInput;
+}
+
+export interface UserCreateOneInput {
+  create?: Maybe<UserCreateInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface AdSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<AdWhereInput>;
+  AND?: Maybe<AdSubscriptionWhereInput[] | AdSubscriptionWhereInput>;
+  OR?: Maybe<AdSubscriptionWhereInput[] | AdSubscriptionWhereInput>;
+  NOT?: Maybe<AdSubscriptionWhereInput[] | AdSubscriptionWhereInput>;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
 export interface UserWhereInput {
@@ -234,7 +449,15 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface UserUpdateManyMutationInput {
+export interface AdUpdateManyMutationInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  image?: Maybe<String>;
+  price?: Maybe<Int>;
+  ranking?: Maybe<Float>;
+}
+
+export interface UserUpdateDataInput {
   email?: Maybe<String>;
   fullName?: Maybe<String>;
   password?: Maybe<String>;
@@ -242,57 +465,197 @@ export interface UserUpdateManyMutationInput {
   token?: Maybe<String>;
 }
 
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-}>;
-
 export interface NodeNode {
   id: ID_Output;
 }
 
-export interface UserEdge {
-  node: User;
-  cursor: String;
+export interface AggregateUser {
+  count: Int;
 }
 
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
     Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<Int>;
 }
 
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
     Fragmentable {
-  count: () => Promise<Long>;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
+export interface AdConnection {
+  pageInfo: PageInfo;
+  edges: AdEdge[];
+}
+
+export interface AdConnectionPromise
+  extends Promise<AdConnection>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<AdEdge>>() => T;
+  aggregate: <T = AggregateAdPromise>() => T;
+}
+
+export interface AdConnectionSubscription
+  extends Promise<AsyncIterator<AdConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AdEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAdSubscription>() => T;
+}
+
+export interface AdSubscriptionPayload {
+  mutation: MutationType;
+  node: Ad;
+  updatedFields: String[];
+  previousValues: AdPreviousValues;
+}
+
+export interface AdSubscriptionPayloadPromise
+  extends Promise<AdSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = AdPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = AdPreviousValuesPromise>() => T;
+}
+
+export interface AdSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<AdSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = AdSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = AdPreviousValuesSubscription>() => T;
+}
+
+export interface Ad {
+  id: ID_Output;
+  title: String;
+  description: String;
+  image: String;
+  price: Int;
+  ranking: Float;
+  createdAt: DateTimeOutput;
+}
+
+export interface AdPromise extends Promise<Ad>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+  image: () => Promise<String>;
+  price: () => Promise<Int>;
+  ranking: () => Promise<Float>;
+  host: <T = UserPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface AdSubscription
+  extends Promise<AsyncIterator<Ad>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  title: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  image: () => Promise<AsyncIterator<String>>;
+  price: () => Promise<AsyncIterator<Int>>;
+  ranking: () => Promise<AsyncIterator<Float>>;
+  host: <T = UserSubscription>() => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface AdNullablePromise extends Promise<Ad | null>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+  image: () => Promise<String>;
+  price: () => Promise<Int>;
+  ranking: () => Promise<Float>;
+  host: <T = UserPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface UserPreviousValues {
+  id: ID_Output;
+  email: String;
+  fullName: String;
+  password: String;
+  role: String;
+  createdAt: DateTimeOutput;
+  token?: String;
+}
+
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  email: () => Promise<String>;
+  fullName: () => Promise<String>;
+  password: () => Promise<String>;
+  role: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  token: () => Promise<String>;
+}
+
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  email: () => Promise<AsyncIterator<String>>;
+  fullName: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  role: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  token: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateAd {
+  count: Int;
+}
+
+export interface AggregateAdPromise extends Promise<AggregateAd>, Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateAdSubscription
+  extends Promise<AsyncIterator<AggregateAd>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface AdPreviousValues {
+  id: ID_Output;
+  title: String;
+  description: String;
+  image: String;
+  price: Int;
+  ranking: Float;
+  createdAt: DateTimeOutput;
+}
+
+export interface AdPreviousValuesPromise
+  extends Promise<AdPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+  image: () => Promise<String>;
+  price: () => Promise<Int>;
+  ranking: () => Promise<Float>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface AdPreviousValuesSubscription
+  extends Promise<AsyncIterator<AdPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  title: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  image: () => Promise<AsyncIterator<String>>;
+  price: () => Promise<AsyncIterator<Int>>;
+  ranking: () => Promise<AsyncIterator<Float>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface User {
@@ -339,29 +702,54 @@ export interface UserNullablePromise
   token: () => Promise<String>;
 }
 
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
+export interface UserEdge {
   node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
+  cursor: String;
 }
 
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
   node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
   node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface AdEdge {
+  node: Ad;
+  cursor: String;
+}
+
+export interface AdEdgePromise extends Promise<AdEdge>, Fragmentable {
+  node: <T = AdPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface AdEdgeSubscription
+  extends Promise<AsyncIterator<AdEdge>>,
+    Fragmentable {
+  node: <T = AdSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserConnection {
@@ -408,55 +796,43 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateUser {
-  count: Int;
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
 }
 
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
     Fragmentable {
-  count: () => Promise<Int>;
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
-export interface UserPreviousValues {
-  id: ID_Output;
-  email: String;
-  fullName: String;
-  password: String;
-  role: String;
-  createdAt: DateTimeOutput;
-  token?: String;
-}
+export type Long = string;
 
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  email: () => Promise<String>;
-  fullName: () => Promise<String>;
-  password: () => Promise<String>;
-  role: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  token: () => Promise<String>;
-}
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number;
+export type ID_Output = string;
 
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  email: () => Promise<AsyncIterator<String>>;
-  fullName: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  role: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  token: () => Promise<AsyncIterator<String>>;
-}
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
 
 /*
 DateTime scalar input type, allowing Date
@@ -469,9 +845,9 @@ DateTime scalar output type, which is always a string
 export type DateTimeOutput = string;
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
 */
-export type Boolean = boolean;
+export type Float = number;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
@@ -483,14 +859,6 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 */
 export type String = string;
 
-/*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
-*/
-export type ID_Input = string | number;
-export type ID_Output = string;
-
-export type Long = string;
-
 /**
  * Model Metadata
  */
@@ -498,6 +866,10 @@ export type Long = string;
 export const models: Model[] = [
   {
     name: "User",
+    embedded: false
+  },
+  {
+    name: "Ad",
     embedded: false
   },
   {
@@ -517,7 +889,7 @@ export const models: Model[] = [
 export const Prisma = makePrismaClientClass<ClientConstructor<Prisma>>({
   typeDefs,
   models,
-  endpoint: `https://us1.prisma.sh/yanier-alfonso/musala-proyect/dev`,
+  endpoint: `http://localhost:4466`,
   secret: `${process.env["PRISMA_SECRET"]}`
 });
 export const prisma = new Prisma();
