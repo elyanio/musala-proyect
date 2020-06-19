@@ -15,6 +15,8 @@ export type AdOrderByInput =
   | 'image_DESC'
   | 'price_ASC'
   | 'price_DESC'
+  | 'ranking_ASC'
+  | 'ranking_DESC'
   | 'createdAt_ASC'
   | 'createdAt_DESC';
 
@@ -86,6 +88,14 @@ export namespace QueryResolvers {
     price_lte?: number | null;
     price_gt?: number | null;
     price_gte?: number | null;
+    ranking?: number | null;
+    ranking_not?: number | null;
+    ranking_in?: number[] | null;
+    ranking_not_in?: number[] | null;
+    ranking_lt?: number | null;
+    ranking_lte?: number | null;
+    ranking_gt?: number | null;
+    ranking_gte?: number | null;
     host?: UserWhereInput | null;
     createdAt?: string | null;
     createdAt_not?: string | null;
@@ -586,6 +596,7 @@ export namespace AdResolvers {
     description: (parent: Ad) => parent.description,
     image: (parent: Ad) => parent.image,
     price: (parent: Ad) => parent.price,
+    ranking: (parent: Ad) => parent.ranking,
     createdAt: (parent: Ad) => parent.createdAt,
   };
 
@@ -658,6 +669,23 @@ export namespace AdResolvers {
       };
 
   export type PriceResolver =
+    | ((
+        parent: Ad,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => number | Promise<number>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: Ad,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => number | Promise<number>;
+      };
+
+  export type RankingResolver =
     | ((
         parent: Ad,
         args: {},
@@ -778,6 +806,23 @@ export namespace AdResolvers {
         };
 
     price:
+      | ((
+          parent: Ad,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => number | Promise<number>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: Ad,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => number | Promise<number>;
+        };
+
+    ranking:
       | ((
           parent: Ad,
           args: {},
