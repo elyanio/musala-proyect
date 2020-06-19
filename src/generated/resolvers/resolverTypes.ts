@@ -166,6 +166,20 @@ export namespace QueryResolvers {
     password_not_starts_with?: string | null;
     password_ends_with?: string | null;
     password_not_ends_with?: string | null;
+    phone?: string | null;
+    phone_not?: string | null;
+    phone_in?: string[] | null;
+    phone_not_in?: string[] | null;
+    phone_lt?: string | null;
+    phone_lte?: string | null;
+    phone_gt?: string | null;
+    phone_gte?: string | null;
+    phone_contains?: string | null;
+    phone_not_contains?: string | null;
+    phone_starts_with?: string | null;
+    phone_not_starts_with?: string | null;
+    phone_ends_with?: string | null;
+    phone_not_ends_with?: string | null;
     role?: string | null;
     role_not?: string | null;
     role_in?: string[] | null;
@@ -294,6 +308,7 @@ export namespace UserResolvers {
     email: (parent: User) => parent.email,
     fullName: (parent: User) => parent.fullName,
     password: (parent: User) => parent.password,
+    phone: (parent: User) => parent.phone,
     role: (parent: User) => parent.role,
     createdAt: (parent: User) => parent.createdAt,
     token: (parent: User) => (parent.token === undefined ? null : parent.token),
@@ -351,6 +366,23 @@ export namespace UserResolvers {
       };
 
   export type PasswordResolver =
+    | ((
+        parent: User,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => string | Promise<string>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: User,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => string | Promise<string>;
+      };
+
+  export type PhoneResolver =
     | ((
         parent: User,
         args: {},
@@ -471,6 +503,23 @@ export namespace UserResolvers {
         };
 
     password:
+      | ((
+          parent: User,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => string | Promise<string>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: User,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => string | Promise<string>;
+        };
+
+    phone:
       | ((
           parent: User,
           args: {},
@@ -837,6 +886,7 @@ export namespace MutationResolvers {
     email: string;
     fullName: string;
     password: string;
+    phone: string;
   }
 
   export interface ArgsSignIn {

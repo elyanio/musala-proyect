@@ -255,6 +255,7 @@ type User {
   email: String!
   fullName: String!
   password: String!
+  phone: String!
   role: String!
   createdAt: DateTime!
   token: String
@@ -271,6 +272,7 @@ input UserCreateInput {
   email: String!
   fullName: String!
   password: String!
+  phone: String!
   role: String!
   token: String
 }
@@ -294,6 +296,8 @@ enum UserOrderByInput {
   fullName_DESC
   password_ASC
   password_DESC
+  phone_ASC
+  phone_DESC
   role_ASC
   role_DESC
   createdAt_ASC
@@ -307,6 +311,7 @@ type UserPreviousValues {
   email: String!
   fullName: String!
   password: String!
+  phone: String!
   role: String!
   createdAt: DateTime!
   token: String
@@ -334,6 +339,7 @@ input UserUpdateDataInput {
   email: String
   fullName: String
   password: String
+  phone: String
   role: String
   token: String
 }
@@ -342,6 +348,7 @@ input UserUpdateInput {
   email: String
   fullName: String
   password: String
+  phone: String
   role: String
   token: String
 }
@@ -350,6 +357,7 @@ input UserUpdateManyMutationInput {
   email: String
   fullName: String
   password: String
+  phone: String
   role: String
   token: String
 }
@@ -423,6 +431,20 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
   role: String
   role_not: String
   role_in: [String!]
