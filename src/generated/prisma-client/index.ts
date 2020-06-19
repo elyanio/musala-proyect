@@ -163,6 +163,8 @@ export type UserOrderByInput =
   | "fullName_DESC"
   | "password_ASC"
   | "password_DESC"
+  | "phone_ASC"
+  | "phone_DESC"
   | "role_ASC"
   | "role_DESC"
   | "createdAt_ASC"
@@ -192,6 +194,7 @@ export interface UserUpdateInput {
   email?: Maybe<String>;
   fullName?: Maybe<String>;
   password?: Maybe<String>;
+  phone?: Maybe<String>;
   role?: Maybe<String>;
   token?: Maybe<String>;
 }
@@ -297,6 +300,7 @@ export interface UserCreateInput {
   email: String;
   fullName: String;
   password: String;
+  phone: String;
   role: String;
   token?: Maybe<String>;
 }
@@ -305,6 +309,7 @@ export interface UserUpdateManyMutationInput {
   email?: Maybe<String>;
   fullName?: Maybe<String>;
   password?: Maybe<String>;
+  phone?: Maybe<String>;
   role?: Maybe<String>;
   token?: Maybe<String>;
 }
@@ -408,6 +413,20 @@ export interface UserWhereInput {
   password_not_starts_with?: Maybe<String>;
   password_ends_with?: Maybe<String>;
   password_not_ends_with?: Maybe<String>;
+  phone?: Maybe<String>;
+  phone_not?: Maybe<String>;
+  phone_in?: Maybe<String[] | String>;
+  phone_not_in?: Maybe<String[] | String>;
+  phone_lt?: Maybe<String>;
+  phone_lte?: Maybe<String>;
+  phone_gt?: Maybe<String>;
+  phone_gte?: Maybe<String>;
+  phone_contains?: Maybe<String>;
+  phone_not_contains?: Maybe<String>;
+  phone_starts_with?: Maybe<String>;
+  phone_not_starts_with?: Maybe<String>;
+  phone_ends_with?: Maybe<String>;
+  phone_not_ends_with?: Maybe<String>;
   role?: Maybe<String>;
   role_not?: Maybe<String>;
   role_in?: Maybe<String[] | String>;
@@ -461,6 +480,7 @@ export interface UserUpdateDataInput {
   email?: Maybe<String>;
   fullName?: Maybe<String>;
   password?: Maybe<String>;
+  phone?: Maybe<String>;
   role?: Maybe<String>;
   token?: Maybe<String>;
 }
@@ -581,6 +601,7 @@ export interface UserPreviousValues {
   email: String;
   fullName: String;
   password: String;
+  phone: String;
   role: String;
   createdAt: DateTimeOutput;
   token?: String;
@@ -593,6 +614,7 @@ export interface UserPreviousValuesPromise
   email: () => Promise<String>;
   fullName: () => Promise<String>;
   password: () => Promise<String>;
+  phone: () => Promise<String>;
   role: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   token: () => Promise<String>;
@@ -605,6 +627,7 @@ export interface UserPreviousValuesSubscription
   email: () => Promise<AsyncIterator<String>>;
   fullName: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
+  phone: () => Promise<AsyncIterator<String>>;
   role: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   token: () => Promise<AsyncIterator<String>>;
@@ -663,6 +686,7 @@ export interface User {
   email: String;
   fullName: String;
   password: String;
+  phone: String;
   role: String;
   createdAt: DateTimeOutput;
   token?: String;
@@ -673,6 +697,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   email: () => Promise<String>;
   fullName: () => Promise<String>;
   password: () => Promise<String>;
+  phone: () => Promise<String>;
   role: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   token: () => Promise<String>;
@@ -685,6 +710,7 @@ export interface UserSubscription
   email: () => Promise<AsyncIterator<String>>;
   fullName: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
+  phone: () => Promise<AsyncIterator<String>>;
   role: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   token: () => Promise<AsyncIterator<String>>;
@@ -697,6 +723,7 @@ export interface UserNullablePromise
   email: () => Promise<String>;
   fullName: () => Promise<String>;
   password: () => Promise<String>;
+  phone: () => Promise<String>;
   role: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   token: () => Promise<String>;
@@ -889,7 +916,7 @@ export const models: Model[] = [
 export const Prisma = makePrismaClientClass<ClientConstructor<Prisma>>({
   typeDefs,
   models,
-  endpoint: `http://localhost:4466`,
+  endpoint: `https://us1.prisma.sh/yanier-alfonso/musala-proyect/dev`,
   secret: `${process.env["PRISMA_SECRET"]}`
 });
 export const prisma = new Prisma();

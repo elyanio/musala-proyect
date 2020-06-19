@@ -15,6 +15,8 @@ export type AdOrderByInput =
   | 'image_DESC'
   | 'price_ASC'
   | 'price_DESC'
+  | 'ranking_ASC'
+  | 'ranking_DESC'
   | 'createdAt_ASC'
   | 'createdAt_DESC';
 
@@ -86,6 +88,14 @@ export namespace QueryResolvers {
     price_lte?: number | null;
     price_gt?: number | null;
     price_gte?: number | null;
+    ranking?: number | null;
+    ranking_not?: number | null;
+    ranking_in?: number[] | null;
+    ranking_not_in?: number[] | null;
+    ranking_lt?: number | null;
+    ranking_lte?: number | null;
+    ranking_gt?: number | null;
+    ranking_gte?: number | null;
     host?: UserWhereInput | null;
     createdAt?: string | null;
     createdAt_not?: string | null;
@@ -156,6 +166,20 @@ export namespace QueryResolvers {
     password_not_starts_with?: string | null;
     password_ends_with?: string | null;
     password_not_ends_with?: string | null;
+    phone?: string | null;
+    phone_not?: string | null;
+    phone_in?: string[] | null;
+    phone_not_in?: string[] | null;
+    phone_lt?: string | null;
+    phone_lte?: string | null;
+    phone_gt?: string | null;
+    phone_gte?: string | null;
+    phone_contains?: string | null;
+    phone_not_contains?: string | null;
+    phone_starts_with?: string | null;
+    phone_not_starts_with?: string | null;
+    phone_ends_with?: string | null;
+    phone_not_ends_with?: string | null;
     role?: string | null;
     role_not?: string | null;
     role_in?: string[] | null;
@@ -284,6 +308,7 @@ export namespace UserResolvers {
     email: (parent: User) => parent.email,
     fullName: (parent: User) => parent.fullName,
     password: (parent: User) => parent.password,
+    phone: (parent: User) => parent.phone,
     role: (parent: User) => parent.role,
     createdAt: (parent: User) => parent.createdAt,
     token: (parent: User) => (parent.token === undefined ? null : parent.token),
@@ -341,6 +366,23 @@ export namespace UserResolvers {
       };
 
   export type PasswordResolver =
+    | ((
+        parent: User,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => string | Promise<string>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: User,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => string | Promise<string>;
+      };
+
+  export type PhoneResolver =
     | ((
         parent: User,
         args: {},
@@ -477,6 +519,23 @@ export namespace UserResolvers {
           ) => string | Promise<string>;
         };
 
+    phone:
+      | ((
+          parent: User,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => string | Promise<string>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: User,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => string | Promise<string>;
+        };
+
     role:
       | ((
           parent: User,
@@ -537,6 +596,7 @@ export namespace AdResolvers {
     description: (parent: Ad) => parent.description,
     image: (parent: Ad) => parent.image,
     price: (parent: Ad) => parent.price,
+    ranking: (parent: Ad) => parent.ranking,
     createdAt: (parent: Ad) => parent.createdAt,
   };
 
@@ -609,6 +669,23 @@ export namespace AdResolvers {
       };
 
   export type PriceResolver =
+    | ((
+        parent: Ad,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => number | Promise<number>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: Ad,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => number | Promise<number>;
+      };
+
+  export type RankingResolver =
     | ((
         parent: Ad,
         args: {},
@@ -745,6 +822,23 @@ export namespace AdResolvers {
           ) => number | Promise<number>;
         };
 
+    ranking:
+      | ((
+          parent: Ad,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => number | Promise<number>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: Ad,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => number | Promise<number>;
+        };
+
     host:
       | ((
           parent: Ad,
@@ -792,6 +886,7 @@ export namespace MutationResolvers {
     email: string;
     fullName: string;
     password: string;
+    phone: string;
   }
 
   export interface ArgsSignIn {
