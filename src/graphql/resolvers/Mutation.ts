@@ -22,12 +22,17 @@ const Mutation: MutationResolvers.Type = {
   signUp: async (
     _: undefined,
     { data: { email }, data }: MutationResolvers.ArgsSignUp,
-    { prisma }: Context,
+    { prisma, services }: Context,
   ) => {
     const exist = await prisma.$exists.user({ email });
     if (exist) throw new CustomError('DUPLICATED_USER');
     const user = await prisma.createUser({ ...data, role: RolesEnum.USER });
-    return user;
+    const token = services.auth.tokenFromId(user?.id);
+    const authenticatedUser = prisma.updateUser({
+      data: { token },
+      where: { email },
+    });
+    return authenticatedUser;
   },
 };
 
