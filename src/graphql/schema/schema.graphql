@@ -14,4 +14,6 @@ type Mutation {
   signIn(data: SignInInput!): User
   signUp(data: SignUpInput!): User
   createBooking(data: BookingInput!): Booking!
+  updateBlockedDay(data: BlockedDayUpdateInput!, where: BlockedDayWhereUniqueInput!): BlockedDay
+  deleteBlockedDay(where: BlockedDayWhereUniqueInput!): BlockedDay
 }

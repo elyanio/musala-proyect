@@ -5,8 +5,9 @@ type User {
   password: String!
   phone: String!
   role: String!
-  createdAt: DateTime! @createdAt
+  bookings: [Booking!]!
   token: String
+  createdAt: DateTime! @createdAt
 }
 
 type Ad {
@@ -35,8 +36,8 @@ type Booking {
 
 type BlockedDay {
   id: ID! @id
-  startDay: DateTime!
-  endDay: DateTime!
+  checkin: DateTime!
+  checkout: DateTime!
   byBooking: Boolean
   ad: Ad!
 }
