@@ -1,5 +1,5 @@
 import { Resolvers } from '../../generated/resolvers/resolverTypes';
-import Mutation from './Mutation';
+import Mutation from './Mutations/Mutation';
 import Query from './Query';
 import User from './User';
 import Ad from './Ad';

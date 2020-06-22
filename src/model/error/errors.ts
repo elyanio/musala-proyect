@@ -16,6 +16,8 @@ export const errorsInfo: ErrorInfo[] = [
   {code: 'OVERLAP_BOOKING', message: 'Those days have already been reserved or blocked'},
   {code: 'AD_NOT_FOUND', message: 'Some operation tried to access an ad not found'},
   {code: 'RESOLVER_NOT_IMPLEMENTED', message: 'Resolver not implemented'},
+  // eslint-disable-next-line @typescript-eslint/quotes
+  { code: 'FORBIDDEN_DELETE_RESOURCE', message: `You can't delete this resource`, },
 ];
 
 export const formatError = (err: GraphQLError): GraphQLError | ApolloError => {
