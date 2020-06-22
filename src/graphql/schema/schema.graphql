@@ -12,4 +12,5 @@ type Query {
 type Mutation {
   signIn(data: SignInInput!): User
   signUp(data: SignUpInput!): User
+  createBooking(data: BookingInput!): Booking!
 }

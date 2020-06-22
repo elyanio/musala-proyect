@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { Context } from '../../context';
 import { MutationResolvers } from '../../generated/resolvers/resolverTypes';
 import { RolesEnum } from '../../model';
@@ -28,6 +29,48 @@ const Mutation: MutationResolvers.Type = {
     if (exist) throw new CustomError('DUPLICATED_USER');
     const user = await prisma.createUser({ ...data, role: RolesEnum.USER });
     return user;
+  },
+  createBooking: async (
+    _,
+    {
+      data: { adId, checkin, checkout, clientId },
+    }: MutationResolvers.ArgsCreateBooking,
+    { prisma }: Context,
+  ) => {
+    const overlapDays = await prisma.ad({ id: adId }).blockedDays({
+      where: {
+        NOT: [
+          {
+            OR: [
+              {
+                endDay_lt: checkin,
+              },
+              { startDay_gt: checkout },
+            ],
+          },
+        ],
+      },
+    });
+    if (overlapDays.length > 0) throw new CustomError('OVERLAP_BOOKING');
+    const price = (await prisma.ad({ id: adId }))?.price;
+    if (!price) throw new CustomError('AD_NOT_FOUND');
+    const nights = moment(checkout).diff(checkin, 'days');
+    const totalPaid = nights * price;
+    const booking = await prisma.createBooking({
+      checkin,
+      checkout,
+      totalPaid,
+      pax: 2,
+      client: { connect: { id: clientId } },
+      ad: { connect: { id: adId } },
+    });
+    await prisma.createBlockedDay({
+      startDay: checkin,
+      endDay: checkout,
+      byBooking: true,
+      ad: { connect: { id: adId } },
+    });
+    return booking;
   },
 };
 
