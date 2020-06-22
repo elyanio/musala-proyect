@@ -17,5 +17,26 @@ type Ad {
   price: Int!
   ranking: Float!
   host: User!
+  bookings: [Booking!]!
+  blockedDays: [BlockedDay!]!
   createdAt: DateTime! @createdAt
+}
+
+type Booking {
+  id: ID! @id
+  checkin: DateTime!
+  checkout: DateTime!
+  totalPaid: Float!
+  pax: Int!
+  client: User!
+  ad: Ad!
+  createdAt: DateTime! @createdAt
+}
+
+type BlockedDay {
+  id: ID! @id
+  startDay: DateTime!
+  endDay: DateTime!
+  byBooking: Boolean
+  ad: Ad!
 }

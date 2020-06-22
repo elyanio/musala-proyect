@@ -13,6 +13,9 @@ export const errorsInfo: ErrorInfo[] = [
   {code: 'DUPLICATED_USER', message: 'This email already exist'},
   {code: 'USER_NOT_READY', message: 'Your user is not ready to sign in'},
   {code: 'GRAPHQL_VALIDATION_FAILED', message: 'Incorrect format fetch'},
+  {code: 'OVERLAP_BOOKING', message: 'Those days have already been reserved or blocked'},
+  {code: 'AD_NOT_FOUND', message: 'Some operation tried to access an ad not found'},
+  {code: 'RESOLVER_NOT_IMPLEMENTED', message: 'Resolver not implemented'},
 ];
 
 export const formatError = (err: GraphQLError): GraphQLError | ApolloError => {
