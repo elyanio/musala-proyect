@@ -233,10 +233,10 @@ export type BookingOrderByInput =
 export type BlockedDayOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "startDay_ASC"
-  | "startDay_DESC"
-  | "endDay_ASC"
-  | "endDay_DESC"
+  | "checkin_ASC"
+  | "checkin_DESC"
+  | "checkout_ASC"
+  | "checkout_DESC"
   | "byBooking_ASC"
   | "byBooking_DESC";
 
@@ -515,22 +515,22 @@ export interface BlockedDayWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  startDay?: Maybe<DateTimeInput>;
-  startDay_not?: Maybe<DateTimeInput>;
-  startDay_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  startDay_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  startDay_lt?: Maybe<DateTimeInput>;
-  startDay_lte?: Maybe<DateTimeInput>;
-  startDay_gt?: Maybe<DateTimeInput>;
-  startDay_gte?: Maybe<DateTimeInput>;
-  endDay?: Maybe<DateTimeInput>;
-  endDay_not?: Maybe<DateTimeInput>;
-  endDay_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  endDay_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  endDay_lt?: Maybe<DateTimeInput>;
-  endDay_lte?: Maybe<DateTimeInput>;
-  endDay_gt?: Maybe<DateTimeInput>;
-  endDay_gte?: Maybe<DateTimeInput>;
+  checkin?: Maybe<DateTimeInput>;
+  checkin_not?: Maybe<DateTimeInput>;
+  checkin_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  checkin_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  checkin_lt?: Maybe<DateTimeInput>;
+  checkin_lte?: Maybe<DateTimeInput>;
+  checkin_gt?: Maybe<DateTimeInput>;
+  checkin_gte?: Maybe<DateTimeInput>;
+  checkout?: Maybe<DateTimeInput>;
+  checkout_not?: Maybe<DateTimeInput>;
+  checkout_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  checkout_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  checkout_lt?: Maybe<DateTimeInput>;
+  checkout_lte?: Maybe<DateTimeInput>;
+  checkout_gt?: Maybe<DateTimeInput>;
+  checkout_gte?: Maybe<DateTimeInput>;
   byBooking?: Maybe<Boolean>;
   byBooking_not?: Maybe<Boolean>;
   ad?: Maybe<AdWhereInput>;
@@ -541,8 +541,8 @@ export interface BlockedDayWhereInput {
 
 export interface BlockedDayCreateWithoutAdInput {
   id?: Maybe<ID_Input>;
-  startDay: DateTimeInput;
-  endDay: DateTimeInput;
+  checkin: DateTimeInput;
+  checkout: DateTimeInput;
   byBooking?: Maybe<Boolean>;
 }
 
@@ -559,8 +559,8 @@ export interface BookingCreateManyWithoutAdInput {
 }
 
 export interface BlockedDayUpdateWithoutAdDataInput {
-  startDay?: Maybe<DateTimeInput>;
-  endDay?: Maybe<DateTimeInput>;
+  checkin?: Maybe<DateTimeInput>;
+  checkout?: Maybe<DateTimeInput>;
   byBooking?: Maybe<Boolean>;
 }
 
@@ -740,8 +740,8 @@ export interface AdUpdateOneRequiredWithoutBookingsInput {
 
 export interface BlockedDayCreateInput {
   id?: Maybe<ID_Input>;
-  startDay: DateTimeInput;
-  endDay: DateTimeInput;
+  checkin: DateTimeInput;
+  checkout: DateTimeInput;
   byBooking?: Maybe<Boolean>;
   ad: AdCreateOneWithoutBlockedDaysInput;
 }
@@ -934,22 +934,22 @@ export interface BlockedDayScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  startDay?: Maybe<DateTimeInput>;
-  startDay_not?: Maybe<DateTimeInput>;
-  startDay_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  startDay_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  startDay_lt?: Maybe<DateTimeInput>;
-  startDay_lte?: Maybe<DateTimeInput>;
-  startDay_gt?: Maybe<DateTimeInput>;
-  startDay_gte?: Maybe<DateTimeInput>;
-  endDay?: Maybe<DateTimeInput>;
-  endDay_not?: Maybe<DateTimeInput>;
-  endDay_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  endDay_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  endDay_lt?: Maybe<DateTimeInput>;
-  endDay_lte?: Maybe<DateTimeInput>;
-  endDay_gt?: Maybe<DateTimeInput>;
-  endDay_gte?: Maybe<DateTimeInput>;
+  checkin?: Maybe<DateTimeInput>;
+  checkin_not?: Maybe<DateTimeInput>;
+  checkin_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  checkin_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  checkin_lt?: Maybe<DateTimeInput>;
+  checkin_lte?: Maybe<DateTimeInput>;
+  checkin_gt?: Maybe<DateTimeInput>;
+  checkin_gte?: Maybe<DateTimeInput>;
+  checkout?: Maybe<DateTimeInput>;
+  checkout_not?: Maybe<DateTimeInput>;
+  checkout_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  checkout_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  checkout_lt?: Maybe<DateTimeInput>;
+  checkout_lte?: Maybe<DateTimeInput>;
+  checkout_gt?: Maybe<DateTimeInput>;
+  checkout_gte?: Maybe<DateTimeInput>;
   byBooking?: Maybe<Boolean>;
   byBooking_not?: Maybe<Boolean>;
   AND?: Maybe<BlockedDayScalarWhereInput[] | BlockedDayScalarWhereInput>;
@@ -981,8 +981,8 @@ export interface BookingUpdateInput {
 }
 
 export interface BlockedDayUpdateManyDataInput {
-  startDay?: Maybe<DateTimeInput>;
-  endDay?: Maybe<DateTimeInput>;
+  checkin?: Maybe<DateTimeInput>;
+  checkout?: Maybe<DateTimeInput>;
   byBooking?: Maybe<Boolean>;
 }
 
@@ -997,8 +997,8 @@ export interface AdUpsertWithoutBookingsInput {
 }
 
 export interface BlockedDayUpdateInput {
-  startDay?: Maybe<DateTimeInput>;
-  endDay?: Maybe<DateTimeInput>;
+  checkin?: Maybe<DateTimeInput>;
+  checkout?: Maybe<DateTimeInput>;
   byBooking?: Maybe<Boolean>;
   ad?: Maybe<AdUpdateOneRequiredWithoutBlockedDaysInput>;
 }
@@ -1154,8 +1154,8 @@ export interface AdCreateOneWithoutBlockedDaysInput {
 }
 
 export interface BlockedDayUpdateManyMutationInput {
-  startDay?: Maybe<DateTimeInput>;
-  endDay?: Maybe<DateTimeInput>;
+  checkin?: Maybe<DateTimeInput>;
+  checkout?: Maybe<DateTimeInput>;
   byBooking?: Maybe<Boolean>;
 }
 
@@ -1673,15 +1673,15 @@ export interface BookingConnectionSubscription
 
 export interface BlockedDay {
   id: ID_Output;
-  startDay: DateTimeOutput;
-  endDay: DateTimeOutput;
+  checkin: DateTimeOutput;
+  checkout: DateTimeOutput;
   byBooking?: Boolean;
 }
 
 export interface BlockedDayPromise extends Promise<BlockedDay>, Fragmentable {
   id: () => Promise<ID_Output>;
-  startDay: () => Promise<DateTimeOutput>;
-  endDay: () => Promise<DateTimeOutput>;
+  checkin: () => Promise<DateTimeOutput>;
+  checkout: () => Promise<DateTimeOutput>;
   byBooking: () => Promise<Boolean>;
   ad: <T = AdPromise>() => T;
 }
@@ -1690,8 +1690,8 @@ export interface BlockedDaySubscription
   extends Promise<AsyncIterator<BlockedDay>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  startDay: () => Promise<AsyncIterator<DateTimeOutput>>;
-  endDay: () => Promise<AsyncIterator<DateTimeOutput>>;
+  checkin: () => Promise<AsyncIterator<DateTimeOutput>>;
+  checkout: () => Promise<AsyncIterator<DateTimeOutput>>;
   byBooking: () => Promise<AsyncIterator<Boolean>>;
   ad: <T = AdSubscription>() => T;
 }
@@ -1700,16 +1700,16 @@ export interface BlockedDayNullablePromise
   extends Promise<BlockedDay | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  startDay: () => Promise<DateTimeOutput>;
-  endDay: () => Promise<DateTimeOutput>;
+  checkin: () => Promise<DateTimeOutput>;
+  checkout: () => Promise<DateTimeOutput>;
   byBooking: () => Promise<Boolean>;
   ad: <T = AdPromise>() => T;
 }
 
 export interface BlockedDayPreviousValues {
   id: ID_Output;
-  startDay: DateTimeOutput;
-  endDay: DateTimeOutput;
+  checkin: DateTimeOutput;
+  checkout: DateTimeOutput;
   byBooking?: Boolean;
 }
 
@@ -1717,8 +1717,8 @@ export interface BlockedDayPreviousValuesPromise
   extends Promise<BlockedDayPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  startDay: () => Promise<DateTimeOutput>;
-  endDay: () => Promise<DateTimeOutput>;
+  checkin: () => Promise<DateTimeOutput>;
+  checkout: () => Promise<DateTimeOutput>;
   byBooking: () => Promise<Boolean>;
 }
 
@@ -1726,8 +1726,8 @@ export interface BlockedDayPreviousValuesSubscription
   extends Promise<AsyncIterator<BlockedDayPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  startDay: () => Promise<AsyncIterator<DateTimeOutput>>;
-  endDay: () => Promise<AsyncIterator<DateTimeOutput>>;
+  checkin: () => Promise<AsyncIterator<DateTimeOutput>>;
+  checkout: () => Promise<AsyncIterator<DateTimeOutput>>;
   byBooking: () => Promise<AsyncIterator<Boolean>>;
 }
 

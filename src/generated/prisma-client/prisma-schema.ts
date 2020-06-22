@@ -297,8 +297,8 @@ type BatchPayload {
 
 type BlockedDay {
   id: ID!
-  startDay: DateTime!
-  endDay: DateTime!
+  checkin: DateTime!
+  checkout: DateTime!
   byBooking: Boolean
   ad: Ad!
 }
@@ -311,8 +311,8 @@ type BlockedDayConnection {
 
 input BlockedDayCreateInput {
   id: ID
-  startDay: DateTime!
-  endDay: DateTime!
+  checkin: DateTime!
+  checkout: DateTime!
   byBooking: Boolean
   ad: AdCreateOneWithoutBlockedDaysInput!
 }
@@ -324,8 +324,8 @@ input BlockedDayCreateManyWithoutAdInput {
 
 input BlockedDayCreateWithoutAdInput {
   id: ID
-  startDay: DateTime!
-  endDay: DateTime!
+  checkin: DateTime!
+  checkout: DateTime!
   byBooking: Boolean
 }
 
@@ -337,18 +337,18 @@ type BlockedDayEdge {
 enum BlockedDayOrderByInput {
   id_ASC
   id_DESC
-  startDay_ASC
-  startDay_DESC
-  endDay_ASC
-  endDay_DESC
+  checkin_ASC
+  checkin_DESC
+  checkout_ASC
+  checkout_DESC
   byBooking_ASC
   byBooking_DESC
 }
 
 type BlockedDayPreviousValues {
   id: ID!
-  startDay: DateTime!
-  endDay: DateTime!
+  checkin: DateTime!
+  checkout: DateTime!
   byBooking: Boolean
 }
 
@@ -367,22 +367,22 @@ input BlockedDayScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  startDay: DateTime
-  startDay_not: DateTime
-  startDay_in: [DateTime!]
-  startDay_not_in: [DateTime!]
-  startDay_lt: DateTime
-  startDay_lte: DateTime
-  startDay_gt: DateTime
-  startDay_gte: DateTime
-  endDay: DateTime
-  endDay_not: DateTime
-  endDay_in: [DateTime!]
-  endDay_not_in: [DateTime!]
-  endDay_lt: DateTime
-  endDay_lte: DateTime
-  endDay_gt: DateTime
-  endDay_gte: DateTime
+  checkin: DateTime
+  checkin_not: DateTime
+  checkin_in: [DateTime!]
+  checkin_not_in: [DateTime!]
+  checkin_lt: DateTime
+  checkin_lte: DateTime
+  checkin_gt: DateTime
+  checkin_gte: DateTime
+  checkout: DateTime
+  checkout_not: DateTime
+  checkout_in: [DateTime!]
+  checkout_not_in: [DateTime!]
+  checkout_lt: DateTime
+  checkout_lte: DateTime
+  checkout_gt: DateTime
+  checkout_gte: DateTime
   byBooking: Boolean
   byBooking_not: Boolean
   AND: [BlockedDayScalarWhereInput!]
@@ -409,21 +409,21 @@ input BlockedDaySubscriptionWhereInput {
 }
 
 input BlockedDayUpdateInput {
-  startDay: DateTime
-  endDay: DateTime
+  checkin: DateTime
+  checkout: DateTime
   byBooking: Boolean
   ad: AdUpdateOneRequiredWithoutBlockedDaysInput
 }
 
 input BlockedDayUpdateManyDataInput {
-  startDay: DateTime
-  endDay: DateTime
+  checkin: DateTime
+  checkout: DateTime
   byBooking: Boolean
 }
 
 input BlockedDayUpdateManyMutationInput {
-  startDay: DateTime
-  endDay: DateTime
+  checkin: DateTime
+  checkout: DateTime
   byBooking: Boolean
 }
 
@@ -445,8 +445,8 @@ input BlockedDayUpdateManyWithWhereNestedInput {
 }
 
 input BlockedDayUpdateWithoutAdDataInput {
-  startDay: DateTime
-  endDay: DateTime
+  checkin: DateTime
+  checkout: DateTime
   byBooking: Boolean
 }
 
@@ -476,22 +476,22 @@ input BlockedDayWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  startDay: DateTime
-  startDay_not: DateTime
-  startDay_in: [DateTime!]
-  startDay_not_in: [DateTime!]
-  startDay_lt: DateTime
-  startDay_lte: DateTime
-  startDay_gt: DateTime
-  startDay_gte: DateTime
-  endDay: DateTime
-  endDay_not: DateTime
-  endDay_in: [DateTime!]
-  endDay_not_in: [DateTime!]
-  endDay_lt: DateTime
-  endDay_lte: DateTime
-  endDay_gt: DateTime
-  endDay_gte: DateTime
+  checkin: DateTime
+  checkin_not: DateTime
+  checkin_in: [DateTime!]
+  checkin_not_in: [DateTime!]
+  checkin_lt: DateTime
+  checkin_lte: DateTime
+  checkin_gt: DateTime
+  checkin_gte: DateTime
+  checkout: DateTime
+  checkout_not: DateTime
+  checkout_in: [DateTime!]
+  checkout_not_in: [DateTime!]
+  checkout_lt: DateTime
+  checkout_lte: DateTime
+  checkout_gt: DateTime
+  checkout_gte: DateTime
   byBooking: Boolean
   byBooking_not: Boolean
   ad: AdWhereInput

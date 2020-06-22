@@ -36,8 +36,8 @@ type Booking {
 
 type BlockedDay {
   id: ID! @id
-  startDay: DateTime!
-  endDay: DateTime!
+  checkin: DateTime!
+  checkout: DateTime!
   byBooking: Boolean
   ad: Ad!
 }

@@ -17,9 +17,9 @@ const createBooking = async (
         {
           OR: [
             {
-              endDay_lt: checkin,
+              checkout_lt: checkin,
             },
-            { startDay_gt: checkout },
+            { checkin_gt: checkout },
           ],
         },
       ],
@@ -39,8 +39,8 @@ const createBooking = async (
     ad: { connect: { id: adId } },
   });
   await prisma.createBlockedDay({
-    startDay: checkin,
-    endDay: checkout,
+    checkin,
+    checkout,
     byBooking: true,
     ad: { connect: { id: adId } },
   });

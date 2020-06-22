@@ -308,22 +308,22 @@ export namespace QueryResolvers {
     id_not_starts_with?: string | null;
     id_ends_with?: string | null;
     id_not_ends_with?: string | null;
-    startDay?: string | null;
-    startDay_not?: string | null;
-    startDay_in?: string[] | null;
-    startDay_not_in?: string[] | null;
-    startDay_lt?: string | null;
-    startDay_lte?: string | null;
-    startDay_gt?: string | null;
-    startDay_gte?: string | null;
-    endDay?: string | null;
-    endDay_not?: string | null;
-    endDay_in?: string[] | null;
-    endDay_not_in?: string[] | null;
-    endDay_lt?: string | null;
-    endDay_lte?: string | null;
-    endDay_gt?: string | null;
-    endDay_gte?: string | null;
+    checkin?: string | null;
+    checkin_not?: string | null;
+    checkin_in?: string[] | null;
+    checkin_not_in?: string[] | null;
+    checkin_lt?: string | null;
+    checkin_lte?: string | null;
+    checkin_gt?: string | null;
+    checkin_gte?: string | null;
+    checkout?: string | null;
+    checkout_not?: string | null;
+    checkout_in?: string[] | null;
+    checkout_not_in?: string[] | null;
+    checkout_lt?: string | null;
+    checkout_lte?: string | null;
+    checkout_gt?: string | null;
+    checkout_gte?: string | null;
     byBooking?: boolean | null;
     byBooking_not?: boolean | null;
     ad?: AdWhereInput | null;
@@ -1414,8 +1414,8 @@ export namespace AdResolvers {
 export namespace BlockedDayResolvers {
   export const defaultResolvers = {
     id: (parent: BlockedDay) => parent.id,
-    startDay: (parent: BlockedDay) => parent.startDay,
-    endDay: (parent: BlockedDay) => parent.endDay,
+    checkin: (parent: BlockedDay) => parent.checkin,
+    checkout: (parent: BlockedDay) => parent.checkout,
     byBooking: (parent: BlockedDay) =>
       parent.byBooking === undefined ? null : parent.byBooking,
   };
@@ -1437,7 +1437,7 @@ export namespace BlockedDayResolvers {
         ) => string | Promise<string>;
       };
 
-  export type StartDayResolver =
+  export type CheckinResolver =
     | ((
         parent: BlockedDay,
         args: {},
@@ -1454,7 +1454,7 @@ export namespace BlockedDayResolvers {
         ) => string | Promise<string>;
       };
 
-  export type EndDayResolver =
+  export type CheckoutResolver =
     | ((
         parent: BlockedDay,
         args: {},
@@ -1523,7 +1523,7 @@ export namespace BlockedDayResolvers {
           ) => string | Promise<string>;
         };
 
-    startDay:
+    checkin:
       | ((
           parent: BlockedDay,
           args: {},
@@ -1540,7 +1540,7 @@ export namespace BlockedDayResolvers {
           ) => string | Promise<string>;
         };
 
-    endDay:
+    checkout:
       | ((
           parent: BlockedDay,
           args: {},
@@ -1614,8 +1614,8 @@ export namespace MutationResolvers {
     adId: string;
   }
   export interface BlockedDayUpdateInput {
-    startDay?: string | null;
-    endDay?: string | null;
+    checkin?: string | null;
+    checkout?: string | null;
     byBooking?: boolean | null;
     ad?: AdUpdateOneRequiredWithoutBlockedDaysInput | null;
   }
@@ -1911,8 +1911,8 @@ export namespace MutationResolvers {
   }
   export interface BlockedDayCreateWithoutAdInput {
     id?: string | null;
-    startDay: string;
-    endDay: string;
+    checkin: string;
+    checkout: string;
     byBooking?: boolean | null;
   }
   export interface BlockedDayUpdateManyWithoutAdInput {
@@ -1950,22 +1950,22 @@ export namespace MutationResolvers {
     id_not_starts_with?: string | null;
     id_ends_with?: string | null;
     id_not_ends_with?: string | null;
-    startDay?: string | null;
-    startDay_not?: string | null;
-    startDay_in?: string[] | null;
-    startDay_not_in?: string[] | null;
-    startDay_lt?: string | null;
-    startDay_lte?: string | null;
-    startDay_gt?: string | null;
-    startDay_gte?: string | null;
-    endDay?: string | null;
-    endDay_not?: string | null;
-    endDay_in?: string[] | null;
-    endDay_not_in?: string[] | null;
-    endDay_lt?: string | null;
-    endDay_lte?: string | null;
-    endDay_gt?: string | null;
-    endDay_gte?: string | null;
+    checkin?: string | null;
+    checkin_not?: string | null;
+    checkin_in?: string[] | null;
+    checkin_not_in?: string[] | null;
+    checkin_lt?: string | null;
+    checkin_lte?: string | null;
+    checkin_gt?: string | null;
+    checkin_gte?: string | null;
+    checkout?: string | null;
+    checkout_not?: string | null;
+    checkout_in?: string[] | null;
+    checkout_not_in?: string[] | null;
+    checkout_lt?: string | null;
+    checkout_lte?: string | null;
+    checkout_gt?: string | null;
+    checkout_gte?: string | null;
     byBooking?: boolean | null;
     byBooking_not?: boolean | null;
     AND?: BlockedDayScalarWhereInput[] | null;
@@ -1977,13 +1977,13 @@ export namespace MutationResolvers {
     data: BlockedDayUpdateManyDataInput;
   }
   export interface BlockedDayUpdateWithoutAdDataInput {
-    startDay?: string | null;
-    endDay?: string | null;
+    checkin?: string | null;
+    checkout?: string | null;
     byBooking?: boolean | null;
   }
   export interface BlockedDayUpdateManyDataInput {
-    startDay?: string | null;
-    endDay?: string | null;
+    checkin?: string | null;
+    checkout?: string | null;
     byBooking?: boolean | null;
   }
 
