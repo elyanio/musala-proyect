@@ -115,6 +115,9 @@ export namespace QueryResolvers {
     OR?: AdWhereInput[] | null;
     NOT?: AdWhereInput[] | null;
   }
+  export interface AdWhereUniqueInput {
+    id?: string | null;
+  }
   export interface UserWhereInput {
     id?: string | null;
     id_not?: string | null;
@@ -336,6 +339,10 @@ export namespace QueryResolvers {
     last?: number | null;
   }
 
+  export interface ArgsAd {
+    where: AdWhereUniqueInput;
+  }
+
   export type CurrentUserResolver =
     | ((
         parent: undefined,
@@ -368,6 +375,23 @@ export namespace QueryResolvers {
           ctx: Context,
           info: GraphQLResolveInfo,
         ) => Array<Ad | null> | Promise<Array<Ad | null>>;
+      };
+
+  export type AdResolver =
+    | ((
+        parent: undefined,
+        args: ArgsAd,
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => Ad | null | Promise<Ad | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: undefined,
+          args: ArgsAd,
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => Ad | null | Promise<Ad | null>;
       };
 
   export interface Type {
@@ -403,6 +427,23 @@ export namespace QueryResolvers {
             ctx: Context,
             info: GraphQLResolveInfo,
           ) => Array<Ad | null> | Promise<Array<Ad | null>>;
+        };
+
+    ad:
+      | ((
+          parent: undefined,
+          args: ArgsAd,
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => Ad | null | Promise<Ad | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: undefined,
+            args: ArgsAd,
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => Ad | null | Promise<Ad | null>;
         };
   }
 }
