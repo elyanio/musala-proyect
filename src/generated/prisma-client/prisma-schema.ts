@@ -527,12 +527,17 @@ input BookingCreateInput {
   checkout: DateTime!
   totalPaid: Float!
   pax: Int!
-  client: UserCreateOneInput!
+  client: UserCreateOneWithoutBookingsInput!
   ad: AdCreateOneWithoutBookingsInput!
 }
 
 input BookingCreateManyWithoutAdInput {
   create: [BookingCreateWithoutAdInput!]
+  connect: [BookingWhereUniqueInput!]
+}
+
+input BookingCreateManyWithoutClientInput {
+  create: [BookingCreateWithoutClientInput!]
   connect: [BookingWhereUniqueInput!]
 }
 
@@ -542,7 +547,16 @@ input BookingCreateWithoutAdInput {
   checkout: DateTime!
   totalPaid: Float!
   pax: Int!
-  client: UserCreateOneInput!
+  client: UserCreateOneWithoutBookingsInput!
+}
+
+input BookingCreateWithoutClientInput {
+  id: ID
+  checkin: DateTime!
+  checkout: DateTime!
+  totalPaid: Float!
+  pax: Int!
+  ad: AdCreateOneWithoutBookingsInput!
 }
 
 type BookingEdge {
@@ -657,7 +671,7 @@ input BookingUpdateInput {
   checkout: DateTime
   totalPaid: Float
   pax: Int
-  client: UserUpdateOneRequiredInput
+  client: UserUpdateOneRequiredWithoutBookingsInput
   ad: AdUpdateOneRequiredWithoutBookingsInput
 }
 
@@ -687,6 +701,18 @@ input BookingUpdateManyWithoutAdInput {
   updateMany: [BookingUpdateManyWithWhereNestedInput!]
 }
 
+input BookingUpdateManyWithoutClientInput {
+  create: [BookingCreateWithoutClientInput!]
+  delete: [BookingWhereUniqueInput!]
+  connect: [BookingWhereUniqueInput!]
+  set: [BookingWhereUniqueInput!]
+  disconnect: [BookingWhereUniqueInput!]
+  update: [BookingUpdateWithWhereUniqueWithoutClientInput!]
+  upsert: [BookingUpsertWithWhereUniqueWithoutClientInput!]
+  deleteMany: [BookingScalarWhereInput!]
+  updateMany: [BookingUpdateManyWithWhereNestedInput!]
+}
+
 input BookingUpdateManyWithWhereNestedInput {
   where: BookingScalarWhereInput!
   data: BookingUpdateManyDataInput!
@@ -697,7 +723,15 @@ input BookingUpdateWithoutAdDataInput {
   checkout: DateTime
   totalPaid: Float
   pax: Int
-  client: UserUpdateOneRequiredInput
+  client: UserUpdateOneRequiredWithoutBookingsInput
+}
+
+input BookingUpdateWithoutClientDataInput {
+  checkin: DateTime
+  checkout: DateTime
+  totalPaid: Float
+  pax: Int
+  ad: AdUpdateOneRequiredWithoutBookingsInput
 }
 
 input BookingUpdateWithWhereUniqueWithoutAdInput {
@@ -705,10 +739,21 @@ input BookingUpdateWithWhereUniqueWithoutAdInput {
   data: BookingUpdateWithoutAdDataInput!
 }
 
+input BookingUpdateWithWhereUniqueWithoutClientInput {
+  where: BookingWhereUniqueInput!
+  data: BookingUpdateWithoutClientDataInput!
+}
+
 input BookingUpsertWithWhereUniqueWithoutAdInput {
   where: BookingWhereUniqueInput!
   update: BookingUpdateWithoutAdDataInput!
   create: BookingCreateWithoutAdInput!
+}
+
+input BookingUpsertWithWhereUniqueWithoutClientInput {
+  where: BookingWhereUniqueInput!
+  update: BookingUpdateWithoutClientDataInput!
+  create: BookingCreateWithoutClientInput!
 }
 
 input BookingWhereInput {
@@ -855,8 +900,9 @@ type User {
   password: String!
   phone: String!
   role: String!
-  createdAt: DateTime!
+  bookings(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Booking!]
   token: String
+  createdAt: DateTime!
 }
 
 type UserConnection {
@@ -872,12 +918,28 @@ input UserCreateInput {
   password: String!
   phone: String!
   role: String!
+  bookings: BookingCreateManyWithoutClientInput
   token: String
 }
 
 input UserCreateOneInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutBookingsInput {
+  create: UserCreateWithoutBookingsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutBookingsInput {
+  id: ID
+  email: String!
+  fullName: String!
+  password: String!
+  phone: String!
+  role: String!
+  token: String
 }
 
 type UserEdge {
@@ -898,10 +960,10 @@ enum UserOrderByInput {
   phone_DESC
   role_ASC
   role_DESC
-  createdAt_ASC
-  createdAt_DESC
   token_ASC
   token_DESC
+  createdAt_ASC
+  createdAt_DESC
 }
 
 type UserPreviousValues {
@@ -911,8 +973,8 @@ type UserPreviousValues {
   password: String!
   phone: String!
   role: String!
-  createdAt: DateTime!
   token: String
+  createdAt: DateTime!
 }
 
 type UserSubscriptionPayload {
@@ -939,6 +1001,7 @@ input UserUpdateDataInput {
   password: String
   phone: String
   role: String
+  bookings: BookingUpdateManyWithoutClientInput
   token: String
 }
 
@@ -948,6 +1011,7 @@ input UserUpdateInput {
   password: String
   phone: String
   role: String
+  bookings: BookingUpdateManyWithoutClientInput
   token: String
 }
 
@@ -967,9 +1031,30 @@ input UserUpdateOneRequiredInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneRequiredWithoutBookingsInput {
+  create: UserCreateWithoutBookingsInput
+  update: UserUpdateWithoutBookingsDataInput
+  upsert: UserUpsertWithoutBookingsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutBookingsDataInput {
+  email: String
+  fullName: String
+  password: String
+  phone: String
+  role: String
+  token: String
+}
+
 input UserUpsertNestedInput {
   update: UserUpdateDataInput!
   create: UserCreateInput!
+}
+
+input UserUpsertWithoutBookingsInput {
+  update: UserUpdateWithoutBookingsDataInput!
+  create: UserCreateWithoutBookingsInput!
 }
 
 input UserWhereInput {
@@ -1057,14 +1142,9 @@ input UserWhereInput {
   role_not_starts_with: String
   role_ends_with: String
   role_not_ends_with: String
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
+  bookings_every: BookingWhereInput
+  bookings_some: BookingWhereInput
+  bookings_none: BookingWhereInput
   token: String
   token_not: String
   token_in: [String!]
@@ -1079,6 +1159,14 @@ input UserWhereInput {
   token_not_starts_with: String
   token_ends_with: String
   token_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
