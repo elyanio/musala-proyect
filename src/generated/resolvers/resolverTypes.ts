@@ -308,22 +308,22 @@ export namespace QueryResolvers {
     id_not_starts_with?: string | null;
     id_ends_with?: string | null;
     id_not_ends_with?: string | null;
-    startDay?: string | null;
-    startDay_not?: string | null;
-    startDay_in?: string[] | null;
-    startDay_not_in?: string[] | null;
-    startDay_lt?: string | null;
-    startDay_lte?: string | null;
-    startDay_gt?: string | null;
-    startDay_gte?: string | null;
-    endDay?: string | null;
-    endDay_not?: string | null;
-    endDay_in?: string[] | null;
-    endDay_not_in?: string[] | null;
-    endDay_lt?: string | null;
-    endDay_lte?: string | null;
-    endDay_gt?: string | null;
-    endDay_gte?: string | null;
+    checkin?: string | null;
+    checkin_not?: string | null;
+    checkin_in?: string[] | null;
+    checkin_not_in?: string[] | null;
+    checkin_lt?: string | null;
+    checkin_lte?: string | null;
+    checkin_gt?: string | null;
+    checkin_gte?: string | null;
+    checkout?: string | null;
+    checkout_not?: string | null;
+    checkout_in?: string[] | null;
+    checkout_not_in?: string[] | null;
+    checkout_lt?: string | null;
+    checkout_lte?: string | null;
+    checkout_gt?: string | null;
+    checkout_gte?: string | null;
     byBooking?: boolean | null;
     byBooking_not?: boolean | null;
     ad?: AdWhereInput | null;
@@ -1414,8 +1414,8 @@ export namespace AdResolvers {
 export namespace BlockedDayResolvers {
   export const defaultResolvers = {
     id: (parent: BlockedDay) => parent.id,
-    startDay: (parent: BlockedDay) => parent.startDay,
-    endDay: (parent: BlockedDay) => parent.endDay,
+    checkin: (parent: BlockedDay) => parent.checkin,
+    checkout: (parent: BlockedDay) => parent.checkout,
     byBooking: (parent: BlockedDay) =>
       parent.byBooking === undefined ? null : parent.byBooking,
   };
@@ -1437,7 +1437,7 @@ export namespace BlockedDayResolvers {
         ) => string | Promise<string>;
       };
 
-  export type StartDayResolver =
+  export type CheckinResolver =
     | ((
         parent: BlockedDay,
         args: {},
@@ -1454,7 +1454,7 @@ export namespace BlockedDayResolvers {
         ) => string | Promise<string>;
       };
 
-  export type EndDayResolver =
+  export type CheckoutResolver =
     | ((
         parent: BlockedDay,
         args: {},
@@ -1523,7 +1523,7 @@ export namespace BlockedDayResolvers {
           ) => string | Promise<string>;
         };
 
-    startDay:
+    checkin:
       | ((
           parent: BlockedDay,
           args: {},
@@ -1540,7 +1540,7 @@ export namespace BlockedDayResolvers {
           ) => string | Promise<string>;
         };
 
-    endDay:
+    checkout:
       | ((
           parent: BlockedDay,
           args: {},
@@ -1613,6 +1613,379 @@ export namespace MutationResolvers {
     pax: number;
     adId: string;
   }
+  export interface BlockedDayUpdateInput {
+    checkin?: string | null;
+    checkout?: string | null;
+    byBooking?: boolean | null;
+    ad?: AdUpdateOneRequiredWithoutBlockedDaysInput | null;
+  }
+  export interface BlockedDayWhereUniqueInput {
+    id?: string | null;
+  }
+  export interface AdUpdateOneRequiredWithoutBlockedDaysInput {
+    create?: AdCreateWithoutBlockedDaysInput | null;
+    update?: AdUpdateWithoutBlockedDaysDataInput | null;
+    upsert?: AdUpsertWithoutBlockedDaysInput | null;
+    connect?: AdWhereUniqueInput | null;
+  }
+  export interface AdCreateWithoutBlockedDaysInput {
+    id?: string | null;
+    title: string;
+    description: string;
+    image: string;
+    price: number;
+    ranking: number;
+    host: UserCreateOneInput;
+    bookings?: BookingCreateManyWithoutAdInput | null;
+  }
+  export interface AdUpdateWithoutBlockedDaysDataInput {
+    title?: string | null;
+    description?: string | null;
+    image?: string | null;
+    price?: number | null;
+    ranking?: number | null;
+    host?: UserUpdateOneRequiredInput | null;
+    bookings?: BookingUpdateManyWithoutAdInput | null;
+  }
+  export interface AdUpsertWithoutBlockedDaysInput {
+    update: AdUpdateWithoutBlockedDaysDataInput;
+    create: AdCreateWithoutBlockedDaysInput;
+  }
+  export interface AdWhereUniqueInput {
+    id?: string | null;
+  }
+  export interface UserCreateOneInput {
+    create?: UserCreateInput | null;
+    connect?: UserWhereUniqueInput | null;
+  }
+  export interface BookingCreateManyWithoutAdInput {
+    create?: BookingCreateWithoutAdInput[] | null;
+    connect?: BookingWhereUniqueInput[] | null;
+  }
+  export interface UserUpdateOneRequiredInput {
+    create?: UserCreateInput | null;
+    update?: UserUpdateDataInput | null;
+    upsert?: UserUpsertNestedInput | null;
+    connect?: UserWhereUniqueInput | null;
+  }
+  export interface BookingUpdateManyWithoutAdInput {
+    create?: BookingCreateWithoutAdInput[] | null;
+    delete?: BookingWhereUniqueInput[] | null;
+    connect?: BookingWhereUniqueInput[] | null;
+    set?: BookingWhereUniqueInput[] | null;
+    disconnect?: BookingWhereUniqueInput[] | null;
+    update?: BookingUpdateWithWhereUniqueWithoutAdInput[] | null;
+    upsert?: BookingUpsertWithWhereUniqueWithoutAdInput[] | null;
+    deleteMany?: BookingScalarWhereInput[] | null;
+    updateMany?: BookingUpdateManyWithWhereNestedInput[] | null;
+  }
+  export interface UserCreateInput {
+    id?: string | null;
+    email: string;
+    fullName: string;
+    password: string;
+    phone: string;
+    role: string;
+    bookings?: BookingCreateManyWithoutClientInput | null;
+    token?: string | null;
+  }
+  export interface UserWhereUniqueInput {
+    id?: string | null;
+    email?: string | null;
+  }
+  export interface BookingCreateWithoutAdInput {
+    id?: string | null;
+    checkin: string;
+    checkout: string;
+    totalPaid: number;
+    pax: number;
+    client: UserCreateOneWithoutBookingsInput;
+  }
+  export interface BookingWhereUniqueInput {
+    id?: string | null;
+  }
+  export interface UserUpdateDataInput {
+    email?: string | null;
+    fullName?: string | null;
+    password?: string | null;
+    phone?: string | null;
+    role?: string | null;
+    bookings?: BookingUpdateManyWithoutClientInput | null;
+    token?: string | null;
+  }
+  export interface UserUpsertNestedInput {
+    update: UserUpdateDataInput;
+    create: UserCreateInput;
+  }
+  export interface BookingUpdateWithWhereUniqueWithoutAdInput {
+    where: BookingWhereUniqueInput;
+    data: BookingUpdateWithoutAdDataInput;
+  }
+  export interface BookingUpsertWithWhereUniqueWithoutAdInput {
+    where: BookingWhereUniqueInput;
+    update: BookingUpdateWithoutAdDataInput;
+    create: BookingCreateWithoutAdInput;
+  }
+  export interface BookingScalarWhereInput {
+    id?: string | null;
+    id_not?: string | null;
+    id_in?: string[] | null;
+    id_not_in?: string[] | null;
+    id_lt?: string | null;
+    id_lte?: string | null;
+    id_gt?: string | null;
+    id_gte?: string | null;
+    id_contains?: string | null;
+    id_not_contains?: string | null;
+    id_starts_with?: string | null;
+    id_not_starts_with?: string | null;
+    id_ends_with?: string | null;
+    id_not_ends_with?: string | null;
+    checkin?: string | null;
+    checkin_not?: string | null;
+    checkin_in?: string[] | null;
+    checkin_not_in?: string[] | null;
+    checkin_lt?: string | null;
+    checkin_lte?: string | null;
+    checkin_gt?: string | null;
+    checkin_gte?: string | null;
+    checkout?: string | null;
+    checkout_not?: string | null;
+    checkout_in?: string[] | null;
+    checkout_not_in?: string[] | null;
+    checkout_lt?: string | null;
+    checkout_lte?: string | null;
+    checkout_gt?: string | null;
+    checkout_gte?: string | null;
+    totalPaid?: number | null;
+    totalPaid_not?: number | null;
+    totalPaid_in?: number[] | null;
+    totalPaid_not_in?: number[] | null;
+    totalPaid_lt?: number | null;
+    totalPaid_lte?: number | null;
+    totalPaid_gt?: number | null;
+    totalPaid_gte?: number | null;
+    pax?: number | null;
+    pax_not?: number | null;
+    pax_in?: number[] | null;
+    pax_not_in?: number[] | null;
+    pax_lt?: number | null;
+    pax_lte?: number | null;
+    pax_gt?: number | null;
+    pax_gte?: number | null;
+    createdAt?: string | null;
+    createdAt_not?: string | null;
+    createdAt_in?: string[] | null;
+    createdAt_not_in?: string[] | null;
+    createdAt_lt?: string | null;
+    createdAt_lte?: string | null;
+    createdAt_gt?: string | null;
+    createdAt_gte?: string | null;
+    AND?: BookingScalarWhereInput[] | null;
+    OR?: BookingScalarWhereInput[] | null;
+    NOT?: BookingScalarWhereInput[] | null;
+  }
+  export interface BookingUpdateManyWithWhereNestedInput {
+    where: BookingScalarWhereInput;
+    data: BookingUpdateManyDataInput;
+  }
+  export interface BookingCreateManyWithoutClientInput {
+    create?: BookingCreateWithoutClientInput[] | null;
+    connect?: BookingWhereUniqueInput[] | null;
+  }
+  export interface UserCreateOneWithoutBookingsInput {
+    create?: UserCreateWithoutBookingsInput | null;
+    connect?: UserWhereUniqueInput | null;
+  }
+  export interface BookingUpdateManyWithoutClientInput {
+    create?: BookingCreateWithoutClientInput[] | null;
+    delete?: BookingWhereUniqueInput[] | null;
+    connect?: BookingWhereUniqueInput[] | null;
+    set?: BookingWhereUniqueInput[] | null;
+    disconnect?: BookingWhereUniqueInput[] | null;
+    update?: BookingUpdateWithWhereUniqueWithoutClientInput[] | null;
+    upsert?: BookingUpsertWithWhereUniqueWithoutClientInput[] | null;
+    deleteMany?: BookingScalarWhereInput[] | null;
+    updateMany?: BookingUpdateManyWithWhereNestedInput[] | null;
+  }
+  export interface BookingUpdateWithoutAdDataInput {
+    checkin?: string | null;
+    checkout?: string | null;
+    totalPaid?: number | null;
+    pax?: number | null;
+    client?: UserUpdateOneRequiredWithoutBookingsInput | null;
+  }
+  export interface BookingUpdateManyDataInput {
+    checkin?: string | null;
+    checkout?: string | null;
+    totalPaid?: number | null;
+    pax?: number | null;
+  }
+  export interface BookingCreateWithoutClientInput {
+    id?: string | null;
+    checkin: string;
+    checkout: string;
+    totalPaid: number;
+    pax: number;
+    ad: AdCreateOneWithoutBookingsInput;
+  }
+  export interface UserCreateWithoutBookingsInput {
+    id?: string | null;
+    email: string;
+    fullName: string;
+    password: string;
+    phone: string;
+    role: string;
+    token?: string | null;
+  }
+  export interface BookingUpdateWithWhereUniqueWithoutClientInput {
+    where: BookingWhereUniqueInput;
+    data: BookingUpdateWithoutClientDataInput;
+  }
+  export interface BookingUpsertWithWhereUniqueWithoutClientInput {
+    where: BookingWhereUniqueInput;
+    update: BookingUpdateWithoutClientDataInput;
+    create: BookingCreateWithoutClientInput;
+  }
+  export interface UserUpdateOneRequiredWithoutBookingsInput {
+    create?: UserCreateWithoutBookingsInput | null;
+    update?: UserUpdateWithoutBookingsDataInput | null;
+    upsert?: UserUpsertWithoutBookingsInput | null;
+    connect?: UserWhereUniqueInput | null;
+  }
+  export interface AdCreateOneWithoutBookingsInput {
+    create?: AdCreateWithoutBookingsInput | null;
+    connect?: AdWhereUniqueInput | null;
+  }
+  export interface BookingUpdateWithoutClientDataInput {
+    checkin?: string | null;
+    checkout?: string | null;
+    totalPaid?: number | null;
+    pax?: number | null;
+    ad?: AdUpdateOneRequiredWithoutBookingsInput | null;
+  }
+  export interface UserUpdateWithoutBookingsDataInput {
+    email?: string | null;
+    fullName?: string | null;
+    password?: string | null;
+    phone?: string | null;
+    role?: string | null;
+    token?: string | null;
+  }
+  export interface UserUpsertWithoutBookingsInput {
+    update: UserUpdateWithoutBookingsDataInput;
+    create: UserCreateWithoutBookingsInput;
+  }
+  export interface AdCreateWithoutBookingsInput {
+    id?: string | null;
+    title: string;
+    description: string;
+    image: string;
+    price: number;
+    ranking: number;
+    host: UserCreateOneInput;
+    blockedDays?: BlockedDayCreateManyWithoutAdInput | null;
+  }
+  export interface AdUpdateOneRequiredWithoutBookingsInput {
+    create?: AdCreateWithoutBookingsInput | null;
+    update?: AdUpdateWithoutBookingsDataInput | null;
+    upsert?: AdUpsertWithoutBookingsInput | null;
+    connect?: AdWhereUniqueInput | null;
+  }
+  export interface BlockedDayCreateManyWithoutAdInput {
+    create?: BlockedDayCreateWithoutAdInput[] | null;
+    connect?: BlockedDayWhereUniqueInput[] | null;
+  }
+  export interface AdUpdateWithoutBookingsDataInput {
+    title?: string | null;
+    description?: string | null;
+    image?: string | null;
+    price?: number | null;
+    ranking?: number | null;
+    host?: UserUpdateOneRequiredInput | null;
+    blockedDays?: BlockedDayUpdateManyWithoutAdInput | null;
+  }
+  export interface AdUpsertWithoutBookingsInput {
+    update: AdUpdateWithoutBookingsDataInput;
+    create: AdCreateWithoutBookingsInput;
+  }
+  export interface BlockedDayCreateWithoutAdInput {
+    id?: string | null;
+    checkin: string;
+    checkout: string;
+    byBooking?: boolean | null;
+  }
+  export interface BlockedDayUpdateManyWithoutAdInput {
+    create?: BlockedDayCreateWithoutAdInput[] | null;
+    delete?: BlockedDayWhereUniqueInput[] | null;
+    connect?: BlockedDayWhereUniqueInput[] | null;
+    set?: BlockedDayWhereUniqueInput[] | null;
+    disconnect?: BlockedDayWhereUniqueInput[] | null;
+    update?: BlockedDayUpdateWithWhereUniqueWithoutAdInput[] | null;
+    upsert?: BlockedDayUpsertWithWhereUniqueWithoutAdInput[] | null;
+    deleteMany?: BlockedDayScalarWhereInput[] | null;
+    updateMany?: BlockedDayUpdateManyWithWhereNestedInput[] | null;
+  }
+  export interface BlockedDayUpdateWithWhereUniqueWithoutAdInput {
+    where: BlockedDayWhereUniqueInput;
+    data: BlockedDayUpdateWithoutAdDataInput;
+  }
+  export interface BlockedDayUpsertWithWhereUniqueWithoutAdInput {
+    where: BlockedDayWhereUniqueInput;
+    update: BlockedDayUpdateWithoutAdDataInput;
+    create: BlockedDayCreateWithoutAdInput;
+  }
+  export interface BlockedDayScalarWhereInput {
+    id?: string | null;
+    id_not?: string | null;
+    id_in?: string[] | null;
+    id_not_in?: string[] | null;
+    id_lt?: string | null;
+    id_lte?: string | null;
+    id_gt?: string | null;
+    id_gte?: string | null;
+    id_contains?: string | null;
+    id_not_contains?: string | null;
+    id_starts_with?: string | null;
+    id_not_starts_with?: string | null;
+    id_ends_with?: string | null;
+    id_not_ends_with?: string | null;
+    checkin?: string | null;
+    checkin_not?: string | null;
+    checkin_in?: string[] | null;
+    checkin_not_in?: string[] | null;
+    checkin_lt?: string | null;
+    checkin_lte?: string | null;
+    checkin_gt?: string | null;
+    checkin_gte?: string | null;
+    checkout?: string | null;
+    checkout_not?: string | null;
+    checkout_in?: string[] | null;
+    checkout_not_in?: string[] | null;
+    checkout_lt?: string | null;
+    checkout_lte?: string | null;
+    checkout_gt?: string | null;
+    checkout_gte?: string | null;
+    byBooking?: boolean | null;
+    byBooking_not?: boolean | null;
+    AND?: BlockedDayScalarWhereInput[] | null;
+    OR?: BlockedDayScalarWhereInput[] | null;
+    NOT?: BlockedDayScalarWhereInput[] | null;
+  }
+  export interface BlockedDayUpdateManyWithWhereNestedInput {
+    where: BlockedDayScalarWhereInput;
+    data: BlockedDayUpdateManyDataInput;
+  }
+  export interface BlockedDayUpdateWithoutAdDataInput {
+    checkin?: string | null;
+    checkout?: string | null;
+    byBooking?: boolean | null;
+  }
+  export interface BlockedDayUpdateManyDataInput {
+    checkin?: string | null;
+    checkout?: string | null;
+    byBooking?: boolean | null;
+  }
 
   export interface ArgsSignIn {
     data: SignInInput;
@@ -1624,6 +1997,15 @@ export namespace MutationResolvers {
 
   export interface ArgsCreateBooking {
     data: BookingInput;
+  }
+
+  export interface ArgsUpdateBlockedDay {
+    data: BlockedDayUpdateInput;
+    where: BlockedDayWhereUniqueInput;
+  }
+
+  export interface ArgsDeleteBlockedDay {
+    where: BlockedDayWhereUniqueInput;
   }
 
   export type SignInResolver =
@@ -1677,6 +2059,40 @@ export namespace MutationResolvers {
         ) => Booking | Promise<Booking>;
       };
 
+  export type UpdateBlockedDayResolver =
+    | ((
+        parent: undefined,
+        args: ArgsUpdateBlockedDay,
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => BlockedDay | null | Promise<BlockedDay | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: undefined,
+          args: ArgsUpdateBlockedDay,
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => BlockedDay | null | Promise<BlockedDay | null>;
+      };
+
+  export type DeleteBlockedDayResolver =
+    | ((
+        parent: undefined,
+        args: ArgsDeleteBlockedDay,
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => BlockedDay | null | Promise<BlockedDay | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: undefined,
+          args: ArgsDeleteBlockedDay,
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => BlockedDay | null | Promise<BlockedDay | null>;
+      };
+
   export interface Type {
     signIn:
       | ((
@@ -1727,6 +2143,40 @@ export namespace MutationResolvers {
             ctx: Context,
             info: GraphQLResolveInfo,
           ) => Booking | Promise<Booking>;
+        };
+
+    updateBlockedDay:
+      | ((
+          parent: undefined,
+          args: ArgsUpdateBlockedDay,
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => BlockedDay | null | Promise<BlockedDay | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: undefined,
+            args: ArgsUpdateBlockedDay,
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => BlockedDay | null | Promise<BlockedDay | null>;
+        };
+
+    deleteBlockedDay:
+      | ((
+          parent: undefined,
+          args: ArgsDeleteBlockedDay,
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => BlockedDay | null | Promise<BlockedDay | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: undefined,
+            args: ArgsDeleteBlockedDay,
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => BlockedDay | null | Promise<BlockedDay | null>;
         };
   }
 }
