@@ -7,6 +7,7 @@
 type Query {
   currentUser: User @authenticated
   ads(where: AdWhereInput, orderBy: AdOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ad]!
+  ad(where: AdWhereUniqueInput!): Ad
 }
 
 type Mutation {
