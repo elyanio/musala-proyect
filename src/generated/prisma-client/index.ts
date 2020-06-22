@@ -17,6 +17,8 @@ export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
   ad: (where?: AdWhereInput) => Promise<boolean>;
+  blockedDay: (where?: BlockedDayWhereInput) => Promise<boolean>;
+  booking: (where?: BookingWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -58,6 +60,44 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => AdConnectionPromise;
+  blockedDay: (where: BlockedDayWhereUniqueInput) => BlockedDayNullablePromise;
+  blockedDays: (args?: {
+    where?: BlockedDayWhereInput;
+    orderBy?: BlockedDayOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<BlockedDay>;
+  blockedDaysConnection: (args?: {
+    where?: BlockedDayWhereInput;
+    orderBy?: BlockedDayOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => BlockedDayConnectionPromise;
+  booking: (where: BookingWhereUniqueInput) => BookingNullablePromise;
+  bookings: (args?: {
+    where?: BookingWhereInput;
+    orderBy?: BookingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Booking>;
+  bookingsConnection: (args?: {
+    where?: BookingWhereInput;
+    orderBy?: BookingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => BookingConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -99,6 +139,38 @@ export interface Prisma {
   }) => AdPromise;
   deleteAd: (where: AdWhereUniqueInput) => AdPromise;
   deleteManyAds: (where?: AdWhereInput) => BatchPayloadPromise;
+  createBlockedDay: (data: BlockedDayCreateInput) => BlockedDayPromise;
+  updateBlockedDay: (args: {
+    data: BlockedDayUpdateInput;
+    where: BlockedDayWhereUniqueInput;
+  }) => BlockedDayPromise;
+  updateManyBlockedDays: (args: {
+    data: BlockedDayUpdateManyMutationInput;
+    where?: BlockedDayWhereInput;
+  }) => BatchPayloadPromise;
+  upsertBlockedDay: (args: {
+    where: BlockedDayWhereUniqueInput;
+    create: BlockedDayCreateInput;
+    update: BlockedDayUpdateInput;
+  }) => BlockedDayPromise;
+  deleteBlockedDay: (where: BlockedDayWhereUniqueInput) => BlockedDayPromise;
+  deleteManyBlockedDays: (where?: BlockedDayWhereInput) => BatchPayloadPromise;
+  createBooking: (data: BookingCreateInput) => BookingPromise;
+  updateBooking: (args: {
+    data: BookingUpdateInput;
+    where: BookingWhereUniqueInput;
+  }) => BookingPromise;
+  updateManyBookings: (args: {
+    data: BookingUpdateManyMutationInput;
+    where?: BookingWhereInput;
+  }) => BatchPayloadPromise;
+  upsertBooking: (args: {
+    where: BookingWhereUniqueInput;
+    create: BookingCreateInput;
+    update: BookingUpdateInput;
+  }) => BookingPromise;
+  deleteBooking: (where: BookingWhereUniqueInput) => BookingPromise;
+  deleteManyBookings: (where?: BookingWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -125,6 +197,12 @@ export interface Prisma {
 
 export interface Subscription {
   ad: (where?: AdSubscriptionWhereInput) => AdSubscriptionPayloadSubscription;
+  blockedDay: (
+    where?: BlockedDaySubscriptionWhereInput
+  ) => BlockedDaySubscriptionPayloadSubscription;
+  booking: (
+    where?: BookingSubscriptionWhereInput
+  ) => BookingSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -137,6 +215,30 @@ export interface ClientConstructor<T> {
 /**
  * Types
  */
+
+export type BookingOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "checkin_ASC"
+  | "checkin_DESC"
+  | "checkout_ASC"
+  | "checkout_DESC"
+  | "totalPaid_ASC"
+  | "totalPaid_DESC"
+  | "pax_ASC"
+  | "pax_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC";
+
+export type BlockedDayOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "startDay_ASC"
+  | "startDay_DESC"
+  | "endDay_ASC"
+  | "endDay_DESC"
+  | "byBooking_ASC"
+  | "byBooking_DESC";
 
 export type AdOrderByInput =
   | "id_ASC"
@@ -174,38 +276,109 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
+export interface BookingUpdateManyWithoutAdInput {
+  create?: Maybe<BookingCreateWithoutAdInput[] | BookingCreateWithoutAdInput>;
+  delete?: Maybe<BookingWhereUniqueInput[] | BookingWhereUniqueInput>;
+  connect?: Maybe<BookingWhereUniqueInput[] | BookingWhereUniqueInput>;
+  set?: Maybe<BookingWhereUniqueInput[] | BookingWhereUniqueInput>;
+  disconnect?: Maybe<BookingWhereUniqueInput[] | BookingWhereUniqueInput>;
+  update?: Maybe<
+    | BookingUpdateWithWhereUniqueWithoutAdInput[]
+    | BookingUpdateWithWhereUniqueWithoutAdInput
+  >;
+  upsert?: Maybe<
+    | BookingUpsertWithWhereUniqueWithoutAdInput[]
+    | BookingUpsertWithWhereUniqueWithoutAdInput
+  >;
+  deleteMany?: Maybe<BookingScalarWhereInput[] | BookingScalarWhereInput>;
+  updateMany?: Maybe<
+    | BookingUpdateManyWithWhereNestedInput[]
+    | BookingUpdateManyWithWhereNestedInput
+  >;
 }
 
 export type AdWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface UserUpdateOneRequiredInput {
-  create?: Maybe<UserCreateInput>;
-  update?: Maybe<UserUpdateDataInput>;
-  upsert?: Maybe<UserUpsertNestedInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface BlockedDayCreateInput {
+  id?: Maybe<ID_Input>;
+  startDay: DateTimeInput;
+  endDay: DateTimeInput;
+  byBooking?: Maybe<Boolean>;
+  ad: AdCreateOneWithoutBlockedDaysInput;
 }
 
-export interface UserUpdateInput {
-  email?: Maybe<String>;
-  fullName?: Maybe<String>;
-  password?: Maybe<String>;
-  phone?: Maybe<String>;
-  role?: Maybe<String>;
-  token?: Maybe<String>;
+export interface BookingScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  checkin?: Maybe<DateTimeInput>;
+  checkin_not?: Maybe<DateTimeInput>;
+  checkin_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  checkin_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  checkin_lt?: Maybe<DateTimeInput>;
+  checkin_lte?: Maybe<DateTimeInput>;
+  checkin_gt?: Maybe<DateTimeInput>;
+  checkin_gte?: Maybe<DateTimeInput>;
+  checkout?: Maybe<DateTimeInput>;
+  checkout_not?: Maybe<DateTimeInput>;
+  checkout_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  checkout_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  checkout_lt?: Maybe<DateTimeInput>;
+  checkout_lte?: Maybe<DateTimeInput>;
+  checkout_gt?: Maybe<DateTimeInput>;
+  checkout_gte?: Maybe<DateTimeInput>;
+  totalPaid?: Maybe<Float>;
+  totalPaid_not?: Maybe<Float>;
+  totalPaid_in?: Maybe<Float[] | Float>;
+  totalPaid_not_in?: Maybe<Float[] | Float>;
+  totalPaid_lt?: Maybe<Float>;
+  totalPaid_lte?: Maybe<Float>;
+  totalPaid_gt?: Maybe<Float>;
+  totalPaid_gte?: Maybe<Float>;
+  pax?: Maybe<Int>;
+  pax_not?: Maybe<Int>;
+  pax_in?: Maybe<Int[] | Int>;
+  pax_not_in?: Maybe<Int[] | Int>;
+  pax_lt?: Maybe<Int>;
+  pax_lte?: Maybe<Int>;
+  pax_gt?: Maybe<Int>;
+  pax_gte?: Maybe<Int>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<BookingScalarWhereInput[] | BookingScalarWhereInput>;
+  OR?: Maybe<BookingScalarWhereInput[] | BookingScalarWhereInput>;
+  NOT?: Maybe<BookingScalarWhereInput[] | BookingScalarWhereInput>;
 }
 
-export interface AdUpdateInput {
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  image?: Maybe<String>;
-  price?: Maybe<Int>;
-  ranking?: Maybe<Float>;
-  host?: Maybe<UserUpdateOneRequiredInput>;
+export interface AdCreateInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  description: String;
+  image: String;
+  price: Int;
+  ranking: Float;
+  host: UserCreateOneInput;
+  bookings?: Maybe<BookingCreateManyWithoutAdInput>;
+  blockedDays?: Maybe<BlockedDayCreateManyWithoutAdInput>;
 }
 
 export interface AdWhereInput {
@@ -282,6 +455,12 @@ export interface AdWhereInput {
   ranking_gt?: Maybe<Float>;
   ranking_gte?: Maybe<Float>;
   host?: Maybe<UserWhereInput>;
+  bookings_every?: Maybe<BookingWhereInput>;
+  bookings_some?: Maybe<BookingWhereInput>;
+  bookings_none?: Maybe<BookingWhereInput>;
+  blockedDays_every?: Maybe<BlockedDayWhereInput>;
+  blockedDays_some?: Maybe<BlockedDayWhereInput>;
+  blockedDays_none?: Maybe<BlockedDayWhereInput>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -295,6 +474,22 @@ export interface AdWhereInput {
   NOT?: Maybe<AdWhereInput[] | AdWhereInput>;
 }
 
+export interface UserCreateOneInput {
+  create?: Maybe<UserCreateInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+}
+
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   email: String;
@@ -303,6 +498,28 @@ export interface UserCreateInput {
   phone: String;
   role: String;
   token?: Maybe<String>;
+}
+
+export interface BlockedDaySubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<BlockedDayWhereInput>;
+  AND?: Maybe<
+    BlockedDaySubscriptionWhereInput[] | BlockedDaySubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    BlockedDaySubscriptionWhereInput[] | BlockedDaySubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    BlockedDaySubscriptionWhereInput[] | BlockedDaySubscriptionWhereInput
+  >;
+}
+
+export interface BookingCreateManyWithoutAdInput {
+  create?: Maybe<BookingCreateWithoutAdInput[] | BookingCreateWithoutAdInput>;
+  connect?: Maybe<BookingWhereUniqueInput[] | BookingWhereUniqueInput>;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -314,7 +531,62 @@ export interface UserUpdateManyMutationInput {
   token?: Maybe<String>;
 }
 
-export interface AdCreateInput {
+export interface BookingCreateWithoutAdInput {
+  id?: Maybe<ID_Input>;
+  checkin: DateTimeInput;
+  checkout: DateTimeInput;
+  totalPaid: Float;
+  pax: Int;
+  client: UserCreateOneInput;
+}
+
+export interface BookingUpdateManyMutationInput {
+  checkin?: Maybe<DateTimeInput>;
+  checkout?: Maybe<DateTimeInput>;
+  totalPaid?: Maybe<Float>;
+  pax?: Maybe<Int>;
+}
+
+export interface BlockedDayCreateManyWithoutAdInput {
+  create?: Maybe<
+    BlockedDayCreateWithoutAdInput[] | BlockedDayCreateWithoutAdInput
+  >;
+  connect?: Maybe<BlockedDayWhereUniqueInput[] | BlockedDayWhereUniqueInput>;
+}
+
+export interface AdUpdateWithoutBookingsDataInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  image?: Maybe<String>;
+  price?: Maybe<Int>;
+  ranking?: Maybe<Float>;
+  host?: Maybe<UserUpdateOneRequiredInput>;
+  blockedDays?: Maybe<BlockedDayUpdateManyWithoutAdInput>;
+}
+
+export interface BlockedDayCreateWithoutAdInput {
+  id?: Maybe<ID_Input>;
+  startDay: DateTimeInput;
+  endDay: DateTimeInput;
+  byBooking?: Maybe<Boolean>;
+}
+
+export type BlockedDayWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface AdUpdateInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  image?: Maybe<String>;
+  price?: Maybe<Int>;
+  ranking?: Maybe<Float>;
+  host?: Maybe<UserUpdateOneRequiredInput>;
+  bookings?: Maybe<BookingUpdateManyWithoutAdInput>;
+  blockedDays?: Maybe<BlockedDayUpdateManyWithoutAdInput>;
+}
+
+export interface AdCreateWithoutBookingsInput {
   id?: Maybe<ID_Input>;
   title: String;
   description: String;
@@ -322,11 +594,124 @@ export interface AdCreateInput {
   price: Int;
   ranking: Float;
   host: UserCreateOneInput;
+  blockedDays?: Maybe<BlockedDayCreateManyWithoutAdInput>;
 }
 
-export interface UserCreateOneInput {
+export interface UserUpdateOneRequiredInput {
   create?: Maybe<UserCreateInput>;
+  update?: Maybe<UserUpdateDataInput>;
+  upsert?: Maybe<UserUpsertNestedInput>;
   connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export type BookingWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface UserUpdateDataInput {
+  email?: Maybe<String>;
+  fullName?: Maybe<String>;
+  password?: Maybe<String>;
+  phone?: Maybe<String>;
+  role?: Maybe<String>;
+  token?: Maybe<String>;
+}
+
+export interface BlockedDayUpdateManyMutationInput {
+  startDay?: Maybe<DateTimeInput>;
+  endDay?: Maybe<DateTimeInput>;
+  byBooking?: Maybe<Boolean>;
+}
+
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
+
+export interface AdCreateOneWithoutBlockedDaysInput {
+  create?: Maybe<AdCreateWithoutBlockedDaysInput>;
+  connect?: Maybe<AdWhereUniqueInput>;
+}
+
+export interface AdUpdateOneRequiredWithoutBlockedDaysInput {
+  create?: Maybe<AdCreateWithoutBlockedDaysInput>;
+  update?: Maybe<AdUpdateWithoutBlockedDaysDataInput>;
+  upsert?: Maybe<AdUpsertWithoutBlockedDaysInput>;
+  connect?: Maybe<AdWhereUniqueInput>;
+}
+
+export interface BookingUpdateWithWhereUniqueWithoutAdInput {
+  where: BookingWhereUniqueInput;
+  data: BookingUpdateWithoutAdDataInput;
+}
+
+export interface AdCreateWithoutBlockedDaysInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  description: String;
+  image: String;
+  price: Int;
+  ranking: Float;
+  host: UserCreateOneInput;
+  bookings?: Maybe<BookingCreateManyWithoutAdInput>;
+}
+
+export interface BookingUpdateWithoutAdDataInput {
+  checkin?: Maybe<DateTimeInput>;
+  checkout?: Maybe<DateTimeInput>;
+  totalPaid?: Maybe<Float>;
+  pax?: Maybe<Int>;
+  client?: Maybe<UserUpdateOneRequiredInput>;
+}
+
+export interface BlockedDayWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  startDay?: Maybe<DateTimeInput>;
+  startDay_not?: Maybe<DateTimeInput>;
+  startDay_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  startDay_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  startDay_lt?: Maybe<DateTimeInput>;
+  startDay_lte?: Maybe<DateTimeInput>;
+  startDay_gt?: Maybe<DateTimeInput>;
+  startDay_gte?: Maybe<DateTimeInput>;
+  endDay?: Maybe<DateTimeInput>;
+  endDay_not?: Maybe<DateTimeInput>;
+  endDay_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  endDay_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  endDay_lt?: Maybe<DateTimeInput>;
+  endDay_lte?: Maybe<DateTimeInput>;
+  endDay_gt?: Maybe<DateTimeInput>;
+  endDay_gte?: Maybe<DateTimeInput>;
+  byBooking?: Maybe<Boolean>;
+  byBooking_not?: Maybe<Boolean>;
+  ad?: Maybe<AdWhereInput>;
+  AND?: Maybe<BlockedDayWhereInput[] | BlockedDayWhereInput>;
+  OR?: Maybe<BlockedDayWhereInput[] | BlockedDayWhereInput>;
+  NOT?: Maybe<BlockedDayWhereInput[] | BlockedDayWhereInput>;
+}
+
+export interface BookingUpsertWithWhereUniqueWithoutAdInput {
+  where: BookingWhereUniqueInput;
+  update: BookingUpdateWithoutAdDataInput;
+  create: BookingCreateWithoutAdInput;
 }
 
 export interface AdSubscriptionWhereInput {
@@ -340,20 +725,140 @@ export interface AdSubscriptionWhereInput {
   NOT?: Maybe<AdSubscriptionWhereInput[] | AdSubscriptionWhereInput>;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-}>;
+export interface BookingWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  checkin?: Maybe<DateTimeInput>;
+  checkin_not?: Maybe<DateTimeInput>;
+  checkin_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  checkin_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  checkin_lt?: Maybe<DateTimeInput>;
+  checkin_lte?: Maybe<DateTimeInput>;
+  checkin_gt?: Maybe<DateTimeInput>;
+  checkin_gte?: Maybe<DateTimeInput>;
+  checkout?: Maybe<DateTimeInput>;
+  checkout_not?: Maybe<DateTimeInput>;
+  checkout_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  checkout_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  checkout_lt?: Maybe<DateTimeInput>;
+  checkout_lte?: Maybe<DateTimeInput>;
+  checkout_gt?: Maybe<DateTimeInput>;
+  checkout_gte?: Maybe<DateTimeInput>;
+  totalPaid?: Maybe<Float>;
+  totalPaid_not?: Maybe<Float>;
+  totalPaid_in?: Maybe<Float[] | Float>;
+  totalPaid_not_in?: Maybe<Float[] | Float>;
+  totalPaid_lt?: Maybe<Float>;
+  totalPaid_lte?: Maybe<Float>;
+  totalPaid_gt?: Maybe<Float>;
+  totalPaid_gte?: Maybe<Float>;
+  pax?: Maybe<Int>;
+  pax_not?: Maybe<Int>;
+  pax_in?: Maybe<Int[] | Int>;
+  pax_not_in?: Maybe<Int[] | Int>;
+  pax_lt?: Maybe<Int>;
+  pax_lte?: Maybe<Int>;
+  pax_gt?: Maybe<Int>;
+  pax_gte?: Maybe<Int>;
+  client?: Maybe<UserWhereInput>;
+  ad?: Maybe<AdWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<BookingWhereInput[] | BookingWhereInput>;
+  OR?: Maybe<BookingWhereInput[] | BookingWhereInput>;
+  NOT?: Maybe<BookingWhereInput[] | BookingWhereInput>;
+}
 
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+export interface AdUpsertWithoutBookingsInput {
+  update: AdUpdateWithoutBookingsDataInput;
+  create: AdCreateWithoutBookingsInput;
+}
+
+export interface BookingUpdateManyWithWhereNestedInput {
+  where: BookingScalarWhereInput;
+  data: BookingUpdateManyDataInput;
+}
+
+export interface BookingUpdateInput {
+  checkin?: Maybe<DateTimeInput>;
+  checkout?: Maybe<DateTimeInput>;
+  totalPaid?: Maybe<Float>;
+  pax?: Maybe<Int>;
+  client?: Maybe<UserUpdateOneRequiredInput>;
+  ad?: Maybe<AdUpdateOneRequiredWithoutBookingsInput>;
+}
+
+export interface BookingUpdateManyDataInput {
+  checkin?: Maybe<DateTimeInput>;
+  checkout?: Maybe<DateTimeInput>;
+  totalPaid?: Maybe<Float>;
+  pax?: Maybe<Int>;
+}
+
+export interface BookingCreateInput {
+  id?: Maybe<ID_Input>;
+  checkin: DateTimeInput;
+  checkout: DateTimeInput;
+  totalPaid: Float;
+  pax: Int;
+  client: UserCreateOneInput;
+  ad: AdCreateOneWithoutBookingsInput;
+}
+
+export interface BlockedDayUpdateManyWithoutAdInput {
+  create?: Maybe<
+    BlockedDayCreateWithoutAdInput[] | BlockedDayCreateWithoutAdInput
+  >;
+  delete?: Maybe<BlockedDayWhereUniqueInput[] | BlockedDayWhereUniqueInput>;
+  connect?: Maybe<BlockedDayWhereUniqueInput[] | BlockedDayWhereUniqueInput>;
+  set?: Maybe<BlockedDayWhereUniqueInput[] | BlockedDayWhereUniqueInput>;
+  disconnect?: Maybe<BlockedDayWhereUniqueInput[] | BlockedDayWhereUniqueInput>;
+  update?: Maybe<
+    | BlockedDayUpdateWithWhereUniqueWithoutAdInput[]
+    | BlockedDayUpdateWithWhereUniqueWithoutAdInput
+  >;
+  upsert?: Maybe<
+    | BlockedDayUpsertWithWhereUniqueWithoutAdInput[]
+    | BlockedDayUpsertWithWhereUniqueWithoutAdInput
+  >;
+  deleteMany?: Maybe<BlockedDayScalarWhereInput[] | BlockedDayScalarWhereInput>;
+  updateMany?: Maybe<
+    | BlockedDayUpdateManyWithWhereNestedInput[]
+    | BlockedDayUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface AdUpdateWithoutBlockedDaysDataInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  image?: Maybe<String>;
+  price?: Maybe<Int>;
+  ranking?: Maybe<Float>;
+  host?: Maybe<UserUpdateOneRequiredInput>;
+  bookings?: Maybe<BookingUpdateManyWithoutAdInput>;
+}
+
+export interface BlockedDayUpdateWithWhereUniqueWithoutAdInput {
+  where: BlockedDayWhereUniqueInput;
+  data: BlockedDayUpdateWithoutAdDataInput;
 }
 
 export interface UserWhereInput {
@@ -468,15 +973,13 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface AdUpdateManyMutationInput {
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  image?: Maybe<String>;
-  price?: Maybe<Int>;
-  ranking?: Maybe<Float>;
+export interface BlockedDayUpdateWithoutAdDataInput {
+  startDay?: Maybe<DateTimeInput>;
+  endDay?: Maybe<DateTimeInput>;
+  byBooking?: Maybe<Boolean>;
 }
 
-export interface UserUpdateDataInput {
+export interface UserUpdateInput {
   email?: Maybe<String>;
   fullName?: Maybe<String>;
   password?: Maybe<String>;
@@ -485,115 +988,106 @@ export interface UserUpdateDataInput {
   token?: Maybe<String>;
 }
 
+export interface BlockedDayUpsertWithWhereUniqueWithoutAdInput {
+  where: BlockedDayWhereUniqueInput;
+  update: BlockedDayUpdateWithoutAdDataInput;
+  create: BlockedDayCreateWithoutAdInput;
+}
+
+export interface AdCreateOneWithoutBookingsInput {
+  create?: Maybe<AdCreateWithoutBookingsInput>;
+  connect?: Maybe<AdWhereUniqueInput>;
+}
+
+export interface AdUpdateManyMutationInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  image?: Maybe<String>;
+  price?: Maybe<Int>;
+  ranking?: Maybe<Float>;
+}
+
+export interface BlockedDayUpdateManyDataInput {
+  startDay?: Maybe<DateTimeInput>;
+  endDay?: Maybe<DateTimeInput>;
+  byBooking?: Maybe<Boolean>;
+}
+
+export interface BlockedDayUpdateManyWithWhereNestedInput {
+  where: BlockedDayScalarWhereInput;
+  data: BlockedDayUpdateManyDataInput;
+}
+
+export interface BlockedDayScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  startDay?: Maybe<DateTimeInput>;
+  startDay_not?: Maybe<DateTimeInput>;
+  startDay_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  startDay_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  startDay_lt?: Maybe<DateTimeInput>;
+  startDay_lte?: Maybe<DateTimeInput>;
+  startDay_gt?: Maybe<DateTimeInput>;
+  startDay_gte?: Maybe<DateTimeInput>;
+  endDay?: Maybe<DateTimeInput>;
+  endDay_not?: Maybe<DateTimeInput>;
+  endDay_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  endDay_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  endDay_lt?: Maybe<DateTimeInput>;
+  endDay_lte?: Maybe<DateTimeInput>;
+  endDay_gt?: Maybe<DateTimeInput>;
+  endDay_gte?: Maybe<DateTimeInput>;
+  byBooking?: Maybe<Boolean>;
+  byBooking_not?: Maybe<Boolean>;
+  AND?: Maybe<BlockedDayScalarWhereInput[] | BlockedDayScalarWhereInput>;
+  OR?: Maybe<BlockedDayScalarWhereInput[] | BlockedDayScalarWhereInput>;
+  NOT?: Maybe<BlockedDayScalarWhereInput[] | BlockedDayScalarWhereInput>;
+}
+
+export interface AdUpsertWithoutBlockedDaysInput {
+  update: AdUpdateWithoutBlockedDaysDataInput;
+  create: AdCreateWithoutBlockedDaysInput;
+}
+
+export interface AdUpdateOneRequiredWithoutBookingsInput {
+  create?: Maybe<AdCreateWithoutBookingsInput>;
+  update?: Maybe<AdUpdateWithoutBookingsDataInput>;
+  upsert?: Maybe<AdUpsertWithoutBookingsInput>;
+  connect?: Maybe<AdWhereUniqueInput>;
+}
+
+export interface BookingSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<BookingWhereInput>;
+  AND?: Maybe<BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput>;
+  OR?: Maybe<BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput>;
+  NOT?: Maybe<BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput>;
+}
+
+export interface BlockedDayUpdateInput {
+  startDay?: Maybe<DateTimeInput>;
+  endDay?: Maybe<DateTimeInput>;
+  byBooking?: Maybe<Boolean>;
+  ad?: Maybe<AdUpdateOneRequiredWithoutBlockedDaysInput>;
+}
+
 export interface NodeNode {
   id: ID_Output;
-}
-
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface AdConnection {
-  pageInfo: PageInfo;
-  edges: AdEdge[];
-}
-
-export interface AdConnectionPromise
-  extends Promise<AdConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<AdEdge>>() => T;
-  aggregate: <T = AggregateAdPromise>() => T;
-}
-
-export interface AdConnectionSubscription
-  extends Promise<AsyncIterator<AdConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<AdEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateAdSubscription>() => T;
-}
-
-export interface AdSubscriptionPayload {
-  mutation: MutationType;
-  node: Ad;
-  updatedFields: String[];
-  previousValues: AdPreviousValues;
-}
-
-export interface AdSubscriptionPayloadPromise
-  extends Promise<AdSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = AdPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = AdPreviousValuesPromise>() => T;
-}
-
-export interface AdSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<AdSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = AdSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = AdPreviousValuesSubscription>() => T;
-}
-
-export interface Ad {
-  id: ID_Output;
-  title: String;
-  description: String;
-  image: String;
-  price: Int;
-  ranking: Float;
-  createdAt: DateTimeOutput;
-}
-
-export interface AdPromise extends Promise<Ad>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  description: () => Promise<String>;
-  image: () => Promise<String>;
-  price: () => Promise<Int>;
-  ranking: () => Promise<Float>;
-  host: <T = UserPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface AdSubscription
-  extends Promise<AsyncIterator<Ad>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  title: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  image: () => Promise<AsyncIterator<String>>;
-  price: () => Promise<AsyncIterator<Int>>;
-  ranking: () => Promise<AsyncIterator<Float>>;
-  host: <T = UserSubscription>() => T;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface AdNullablePromise extends Promise<Ad | null>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  description: () => Promise<String>;
-  image: () => Promise<String>;
-  price: () => Promise<Int>;
-  ranking: () => Promise<Float>;
-  host: <T = UserPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface UserPreviousValues {
@@ -647,38 +1141,240 @@ export interface AggregateAdSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface AdPreviousValues {
+export interface BlockedDayPreviousValues {
   id: ID_Output;
-  title: String;
-  description: String;
-  image: String;
-  price: Int;
-  ranking: Float;
-  createdAt: DateTimeOutput;
+  startDay: DateTimeOutput;
+  endDay: DateTimeOutput;
+  byBooking?: Boolean;
 }
 
-export interface AdPreviousValuesPromise
-  extends Promise<AdPreviousValues>,
+export interface BlockedDayPreviousValuesPromise
+  extends Promise<BlockedDayPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  description: () => Promise<String>;
-  image: () => Promise<String>;
-  price: () => Promise<Int>;
-  ranking: () => Promise<Float>;
-  createdAt: () => Promise<DateTimeOutput>;
+  startDay: () => Promise<DateTimeOutput>;
+  endDay: () => Promise<DateTimeOutput>;
+  byBooking: () => Promise<Boolean>;
 }
 
-export interface AdPreviousValuesSubscription
-  extends Promise<AsyncIterator<AdPreviousValues>>,
+export interface BlockedDayPreviousValuesSubscription
+  extends Promise<AsyncIterator<BlockedDayPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  title: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  image: () => Promise<AsyncIterator<String>>;
-  price: () => Promise<AsyncIterator<Int>>;
-  ranking: () => Promise<AsyncIterator<Float>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  startDay: () => Promise<AsyncIterator<DateTimeOutput>>;
+  endDay: () => Promise<AsyncIterator<DateTimeOutput>>;
+  byBooking: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface AdEdge {
+  node: Ad;
+  cursor: String;
+}
+
+export interface AdEdgePromise extends Promise<AdEdge>, Fragmentable {
+  node: <T = AdPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface AdEdgeSubscription
+  extends Promise<AsyncIterator<AdEdge>>,
+    Fragmentable {
+  node: <T = AdSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AdConnection {
+  pageInfo: PageInfo;
+  edges: AdEdge[];
+}
+
+export interface AdConnectionPromise
+  extends Promise<AdConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<AdEdge>>() => T;
+  aggregate: <T = AggregateAdPromise>() => T;
+}
+
+export interface AdConnectionSubscription
+  extends Promise<AsyncIterator<AdConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AdEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAdSubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface BookingSubscriptionPayload {
+  mutation: MutationType;
+  node: Booking;
+  updatedFields: String[];
+  previousValues: BookingPreviousValues;
+}
+
+export interface BookingSubscriptionPayloadPromise
+  extends Promise<BookingSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = BookingPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = BookingPreviousValuesPromise>() => T;
+}
+
+export interface BookingSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<BookingSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = BookingSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = BookingPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateBooking {
+  count: Int;
+}
+
+export interface AggregateBookingPromise
+  extends Promise<AggregateBooking>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateBookingSubscription
+  extends Promise<AsyncIterator<AggregateBooking>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface BlockedDay {
+  id: ID_Output;
+  startDay: DateTimeOutput;
+  endDay: DateTimeOutput;
+  byBooking?: Boolean;
+}
+
+export interface BlockedDayPromise extends Promise<BlockedDay>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  startDay: () => Promise<DateTimeOutput>;
+  endDay: () => Promise<DateTimeOutput>;
+  byBooking: () => Promise<Boolean>;
+  ad: <T = AdPromise>() => T;
+}
+
+export interface BlockedDaySubscription
+  extends Promise<AsyncIterator<BlockedDay>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  startDay: () => Promise<AsyncIterator<DateTimeOutput>>;
+  endDay: () => Promise<AsyncIterator<DateTimeOutput>>;
+  byBooking: () => Promise<AsyncIterator<Boolean>>;
+  ad: <T = AdSubscription>() => T;
+}
+
+export interface BlockedDayNullablePromise
+  extends Promise<BlockedDay | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  startDay: () => Promise<DateTimeOutput>;
+  endDay: () => Promise<DateTimeOutput>;
+  byBooking: () => Promise<Boolean>;
+  ad: <T = AdPromise>() => T;
+}
+
+export interface BookingConnection {
+  pageInfo: PageInfo;
+  edges: BookingEdge[];
+}
+
+export interface BookingConnectionPromise
+  extends Promise<BookingConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<BookingEdge>>() => T;
+  aggregate: <T = AggregateBookingPromise>() => T;
+}
+
+export interface BookingConnectionSubscription
+  extends Promise<AsyncIterator<BookingConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<BookingEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateBookingSubscription>() => T;
 }
 
 export interface User {
@@ -729,98 +1425,122 @@ export interface UserNullablePromise
   token: () => Promise<String>;
 }
 
-export interface UserEdge {
-  node: User;
+export interface BlockedDayEdge {
+  node: BlockedDay;
   cursor: String;
 }
 
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
+export interface BlockedDayEdgePromise
+  extends Promise<BlockedDayEdge>,
+    Fragmentable {
+  node: <T = BlockedDayPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface BlockedDayEdgeSubscription
+  extends Promise<AsyncIterator<BlockedDayEdge>>,
     Fragmentable {
-  node: <T = UserSubscription>() => T;
+  node: <T = BlockedDaySubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface BatchPayload {
-  count: Long;
+export interface Ad {
+  id: ID_Output;
+  title: String;
+  description: String;
+  image: String;
+  price: Int;
+  ranking: Float;
+  createdAt: DateTimeOutput;
 }
 
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
+export interface AdPromise extends Promise<Ad>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+  image: () => Promise<String>;
+  price: () => Promise<Int>;
+  ranking: () => Promise<Float>;
+  host: <T = UserPromise>() => T;
+  bookings: <T = FragmentableArray<Booking>>(args?: {
+    where?: BookingWhereInput;
+    orderBy?: BookingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  blockedDays: <T = FragmentableArray<BlockedDay>>(args?: {
+    where?: BlockedDayWhereInput;
+    orderBy?: BlockedDayOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface AdSubscription
+  extends Promise<AsyncIterator<Ad>>,
     Fragmentable {
-  count: () => Promise<Long>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  title: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  image: () => Promise<AsyncIterator<String>>;
+  price: () => Promise<AsyncIterator<Int>>;
+  ranking: () => Promise<AsyncIterator<Float>>;
+  host: <T = UserSubscription>() => T;
+  bookings: <T = Promise<AsyncIterator<BookingSubscription>>>(args?: {
+    where?: BookingWhereInput;
+    orderBy?: BookingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  blockedDays: <T = Promise<AsyncIterator<BlockedDaySubscription>>>(args?: {
+    where?: BlockedDayWhereInput;
+    orderBy?: BlockedDayOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface AdEdge {
-  node: Ad;
-  cursor: String;
-}
-
-export interface AdEdgePromise extends Promise<AdEdge>, Fragmentable {
-  node: <T = AdPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface AdEdgeSubscription
-  extends Promise<AsyncIterator<AdEdge>>,
-    Fragmentable {
-  node: <T = AdSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
-}
-
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
-}
-
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
+export interface AdNullablePromise extends Promise<Ad | null>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+  image: () => Promise<String>;
+  price: () => Promise<Int>;
+  ranking: () => Promise<Float>;
+  host: <T = UserPromise>() => T;
+  bookings: <T = FragmentableArray<Booking>>(args?: {
+    where?: BookingWhereInput;
+    orderBy?: BookingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  blockedDays: <T = FragmentableArray<BlockedDay>>(args?: {
+    where?: BlockedDayWhereInput;
+    orderBy?: BlockedDayOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface UserSubscriptionPayload {
@@ -848,6 +1568,248 @@ export interface UserSubscriptionPayloadSubscription
   previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
+export interface BookingPreviousValues {
+  id: ID_Output;
+  checkin: DateTimeOutput;
+  checkout: DateTimeOutput;
+  totalPaid: Float;
+  pax: Int;
+  createdAt: DateTimeOutput;
+}
+
+export interface BookingPreviousValuesPromise
+  extends Promise<BookingPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  checkin: () => Promise<DateTimeOutput>;
+  checkout: () => Promise<DateTimeOutput>;
+  totalPaid: () => Promise<Float>;
+  pax: () => Promise<Int>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface BookingPreviousValuesSubscription
+  extends Promise<AsyncIterator<BookingPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  checkin: () => Promise<AsyncIterator<DateTimeOutput>>;
+  checkout: () => Promise<AsyncIterator<DateTimeOutput>>;
+  totalPaid: () => Promise<AsyncIterator<Float>>;
+  pax: () => Promise<AsyncIterator<Int>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface BlockedDaySubscriptionPayload {
+  mutation: MutationType;
+  node: BlockedDay;
+  updatedFields: String[];
+  previousValues: BlockedDayPreviousValues;
+}
+
+export interface BlockedDaySubscriptionPayloadPromise
+  extends Promise<BlockedDaySubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = BlockedDayPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = BlockedDayPreviousValuesPromise>() => T;
+}
+
+export interface BlockedDaySubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<BlockedDaySubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = BlockedDaySubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = BlockedDayPreviousValuesSubscription>() => T;
+}
+
+export interface Booking {
+  id: ID_Output;
+  checkin: DateTimeOutput;
+  checkout: DateTimeOutput;
+  totalPaid: Float;
+  pax: Int;
+  createdAt: DateTimeOutput;
+}
+
+export interface BookingPromise extends Promise<Booking>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  checkin: () => Promise<DateTimeOutput>;
+  checkout: () => Promise<DateTimeOutput>;
+  totalPaid: () => Promise<Float>;
+  pax: () => Promise<Int>;
+  client: <T = UserPromise>() => T;
+  ad: <T = AdPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface BookingSubscription
+  extends Promise<AsyncIterator<Booking>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  checkin: () => Promise<AsyncIterator<DateTimeOutput>>;
+  checkout: () => Promise<AsyncIterator<DateTimeOutput>>;
+  totalPaid: () => Promise<AsyncIterator<Float>>;
+  pax: () => Promise<AsyncIterator<Int>>;
+  client: <T = UserSubscription>() => T;
+  ad: <T = AdSubscription>() => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface BookingNullablePromise
+  extends Promise<Booking | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  checkin: () => Promise<DateTimeOutput>;
+  checkout: () => Promise<DateTimeOutput>;
+  totalPaid: () => Promise<Float>;
+  pax: () => Promise<Int>;
+  client: <T = UserPromise>() => T;
+  ad: <T = AdPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface AdPreviousValues {
+  id: ID_Output;
+  title: String;
+  description: String;
+  image: String;
+  price: Int;
+  ranking: Float;
+  createdAt: DateTimeOutput;
+}
+
+export interface AdPreviousValuesPromise
+  extends Promise<AdPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+  image: () => Promise<String>;
+  price: () => Promise<Int>;
+  ranking: () => Promise<Float>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface AdPreviousValuesSubscription
+  extends Promise<AsyncIterator<AdPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  title: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  image: () => Promise<AsyncIterator<String>>;
+  price: () => Promise<AsyncIterator<Int>>;
+  ranking: () => Promise<AsyncIterator<Float>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface AdSubscriptionPayload {
+  mutation: MutationType;
+  node: Ad;
+  updatedFields: String[];
+  previousValues: AdPreviousValues;
+}
+
+export interface AdSubscriptionPayloadPromise
+  extends Promise<AdSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = AdPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = AdPreviousValuesPromise>() => T;
+}
+
+export interface AdSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<AdSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = AdSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = AdPreviousValuesSubscription>() => T;
+}
+
+export interface BookingEdge {
+  node: Booking;
+  cursor: String;
+}
+
+export interface BookingEdgePromise extends Promise<BookingEdge>, Fragmentable {
+  node: <T = BookingPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface BookingEdgeSubscription
+  extends Promise<AsyncIterator<BookingEdge>>,
+    Fragmentable {
+  node: <T = BookingSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
+
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface BlockedDayConnection {
+  pageInfo: PageInfo;
+  edges: BlockedDayEdge[];
+}
+
+export interface BlockedDayConnectionPromise
+  extends Promise<BlockedDayConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<BlockedDayEdge>>() => T;
+  aggregate: <T = AggregateBlockedDayPromise>() => T;
+}
+
+export interface BlockedDayConnectionSubscription
+  extends Promise<AsyncIterator<BlockedDayConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<BlockedDayEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateBlockedDaySubscription>() => T;
+}
+
+export interface AggregateBlockedDay {
+  count: Int;
+}
+
+export interface AggregateBlockedDayPromise
+  extends Promise<AggregateBlockedDay>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateBlockedDaySubscription
+  extends Promise<AsyncIterator<AggregateBlockedDay>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+/*
+DateTime scalar input type, allowing Date
+*/
+export type DateTimeInput = Date | string;
+
+/*
+DateTime scalar output type, which is always a string
+*/
+export type DateTimeOutput = string;
+
 export type Long = string;
 
 /*
@@ -862,19 +1824,9 @@ The `Boolean` scalar type represents `true` or `false`.
 export type Boolean = boolean;
 
 /*
-DateTime scalar input type, allowing Date
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
-export type DateTimeInput = Date | string;
-
-/*
-DateTime scalar output type, which is always a string
-*/
-export type DateTimeOutput = string;
-
-/*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
-*/
-export type Float = number;
+export type String = string;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
@@ -882,9 +1834,9 @@ The `Int` scalar type represents non-fractional signed whole numeric values. Int
 export type Int = number;
 
 /*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
 */
-export type String = string;
+export type Float = number;
 
 /**
  * Model Metadata
@@ -897,6 +1849,14 @@ export const models: Model[] = [
   },
   {
     name: "Ad",
+    embedded: false
+  },
+  {
+    name: "Booking",
+    embedded: false
+  },
+  {
+    name: "BlockedDay",
     embedded: false
   },
   {
@@ -916,7 +1876,7 @@ export const models: Model[] = [
 export const Prisma = makePrismaClientClass<ClientConstructor<Prisma>>({
   typeDefs,
   models,
-  endpoint: `https://us1.prisma.sh/yanier-alfonso/musala-proyect/dev`,
+  endpoint: `http://localhost:4466`,
   secret: `${process.env["PRISMA_SECRET"]}`
 });
 export const prisma = new Prisma();
