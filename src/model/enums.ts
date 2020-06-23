@@ -5,5 +5,12 @@ export enum RolesEnum {
 
 export enum ModelEnum {
   'USER' = 'USER',
+  'BOOKING' = 'BOOKING',
+  'BLOCKED_DAY' = 'BLOCKED_DAY',
+  'AD' = 'AD',
 }
 
+export enum OpsEnum {
+  'BLOCK' = 'BLOCK',
+  'FREE' = 'FREE',
+}

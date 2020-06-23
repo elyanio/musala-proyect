@@ -18,7 +18,14 @@ input BookingInput {
   adId: String!
 }
 
-enum SignUpRoleEnum {
-  HOST
-  USER
+input UpdateAvailableInput {
+  checkin: DateTime!
+  checkout: DateTime!
+  ops: OpsEnum!
+  adId: String!
+}
+
+enum OpsEnum {
+  BLOCK
+  FREE
 }
