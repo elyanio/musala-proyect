@@ -1,15 +1,22 @@
+import { Context } from '../../context';
+import { Booking } from '../../generated/prisma-client';
 import { BookingResolvers } from '../../generated/resolvers/resolverTypes';
-import CustomError from '../../model/error/CustomError';
 
 const Booking: BookingResolvers.Type = {
   ...BookingResolvers.defaultResolvers,
 
-  client: () => {
-    throw new CustomError('RESOLVER_NOT_IMPLEMENTED');
-  },
-  ad: () => {
-    throw new CustomError('RESOLVER_NOT_IMPLEMENTED');
-  },
+  client: ({ id }: Booking, args: {}, { prisma }: Context) =>
+    prisma
+      .booking({
+        id,
+      })
+      .client(),
+  ad: ({ id }: Booking, args: {}, { prisma }: Context) =>
+    prisma
+      .booking({
+        id,
+      })
+      .ad(),
 };
 
 export default Booking;
