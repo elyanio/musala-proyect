@@ -4,7 +4,6 @@ import CustomError from '../../../model/error/CustomError';
 import { Context } from '../../../context';
 import { Booking } from '../../../generated/prisma-client';
 import overlapBlockedDays from '../../../utils/blockedDays';
-import { DATE_FORMAT } from '../../../utils/constants';
 
 const createBooking = async (
   _: undefined,
@@ -29,7 +28,7 @@ const createBooking = async (
   });
   await prisma.createBlockedDay({
     checkin,
-    checkout: moment(checkout, DATE_FORMAT).subtract(1, 'day').toDate(),
+    checkout,
     byBooking: true,
     ad: { connect: { id: adId } },
   });
