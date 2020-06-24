@@ -1,5 +1,4 @@
-# endpoint: https://us1.prisma.sh/yanier-alfonso/musala-proyect/dev
-endpoint: http://localhost:4466/
+endpoint: https://us1.prisma.sh/yanier-alfonso/musala-proyect/dev
 datamodel: 
   - ./src/model/prisma/datamodel.graphql
   - ./src/model/prisma/enums.graphql
