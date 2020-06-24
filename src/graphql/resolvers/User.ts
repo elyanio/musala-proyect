@@ -9,6 +9,12 @@ const User: UserResolvers.Type = {
         id,
       })
       .bookings(),
+  ad: ({ id }, args, { prisma }) =>
+    prisma
+      .user({
+        id,
+      })
+      .ad(),
 };
 
 export default User;
