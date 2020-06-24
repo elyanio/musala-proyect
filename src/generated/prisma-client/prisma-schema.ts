@@ -28,7 +28,7 @@ input AdCreateInput {
   image: String!
   price: Int!
   ranking: Float!
-  host: UserCreateOneInput!
+  host: UserCreateOneWithoutAdInput!
   bookings: BookingCreateManyWithoutAdInput
   blockedDays: BlockedDayCreateManyWithoutAdInput
 }
@@ -43,6 +43,11 @@ input AdCreateOneWithoutBookingsInput {
   connect: AdWhereUniqueInput
 }
 
+input AdCreateOneWithoutHostInput {
+  create: AdCreateWithoutHostInput
+  connect: AdWhereUniqueInput
+}
+
 input AdCreateWithoutBlockedDaysInput {
   id: ID
   title: String!
@@ -50,7 +55,7 @@ input AdCreateWithoutBlockedDaysInput {
   image: String!
   price: Int!
   ranking: Float!
-  host: UserCreateOneInput!
+  host: UserCreateOneWithoutAdInput!
   bookings: BookingCreateManyWithoutAdInput
 }
 
@@ -61,7 +66,18 @@ input AdCreateWithoutBookingsInput {
   image: String!
   price: Int!
   ranking: Float!
-  host: UserCreateOneInput!
+  host: UserCreateOneWithoutAdInput!
+  blockedDays: BlockedDayCreateManyWithoutAdInput
+}
+
+input AdCreateWithoutHostInput {
+  id: ID
+  title: String!
+  description: String!
+  image: String!
+  price: Int!
+  ranking: Float!
+  bookings: BookingCreateManyWithoutAdInput
   blockedDays: BlockedDayCreateManyWithoutAdInput
 }
 
@@ -121,7 +137,7 @@ input AdUpdateInput {
   image: String
   price: Int
   ranking: Float
-  host: UserUpdateOneRequiredInput
+  host: UserUpdateOneRequiredWithoutAdInput
   bookings: BookingUpdateManyWithoutAdInput
   blockedDays: BlockedDayUpdateManyWithoutAdInput
 }
@@ -148,13 +164,22 @@ input AdUpdateOneRequiredWithoutBookingsInput {
   connect: AdWhereUniqueInput
 }
 
+input AdUpdateOneWithoutHostInput {
+  create: AdCreateWithoutHostInput
+  update: AdUpdateWithoutHostDataInput
+  upsert: AdUpsertWithoutHostInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: AdWhereUniqueInput
+}
+
 input AdUpdateWithoutBlockedDaysDataInput {
   title: String
   description: String
   image: String
   price: Int
   ranking: Float
-  host: UserUpdateOneRequiredInput
+  host: UserUpdateOneRequiredWithoutAdInput
   bookings: BookingUpdateManyWithoutAdInput
 }
 
@@ -164,7 +189,17 @@ input AdUpdateWithoutBookingsDataInput {
   image: String
   price: Int
   ranking: Float
-  host: UserUpdateOneRequiredInput
+  host: UserUpdateOneRequiredWithoutAdInput
+  blockedDays: BlockedDayUpdateManyWithoutAdInput
+}
+
+input AdUpdateWithoutHostDataInput {
+  title: String
+  description: String
+  image: String
+  price: Int
+  ranking: Float
+  bookings: BookingUpdateManyWithoutAdInput
   blockedDays: BlockedDayUpdateManyWithoutAdInput
 }
 
@@ -176,6 +211,11 @@ input AdUpsertWithoutBlockedDaysInput {
 input AdUpsertWithoutBookingsInput {
   update: AdUpdateWithoutBookingsDataInput!
   create: AdCreateWithoutBookingsInput!
+}
+
+input AdUpsertWithoutHostInput {
+  update: AdUpdateWithoutHostDataInput!
+  create: AdCreateWithoutHostInput!
 }
 
 input AdWhereInput {
@@ -901,6 +941,7 @@ type User {
   phone: String!
   role: String!
   bookings(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Booking!]
+  ad: Ad
   token: String
   createdAt: DateTime!
 }
@@ -919,17 +960,29 @@ input UserCreateInput {
   phone: String!
   role: String!
   bookings: BookingCreateManyWithoutClientInput
+  ad: AdCreateOneWithoutHostInput
   token: String
 }
 
-input UserCreateOneInput {
-  create: UserCreateInput
+input UserCreateOneWithoutAdInput {
+  create: UserCreateWithoutAdInput
   connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutBookingsInput {
   create: UserCreateWithoutBookingsInput
   connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutAdInput {
+  id: ID
+  email: String!
+  fullName: String!
+  password: String!
+  phone: String!
+  role: String!
+  bookings: BookingCreateManyWithoutClientInput
+  token: String
 }
 
 input UserCreateWithoutBookingsInput {
@@ -939,6 +992,7 @@ input UserCreateWithoutBookingsInput {
   password: String!
   phone: String!
   role: String!
+  ad: AdCreateOneWithoutHostInput
   token: String
 }
 
@@ -995,16 +1049,6 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
-input UserUpdateDataInput {
-  email: String
-  fullName: String
-  password: String
-  phone: String
-  role: String
-  bookings: BookingUpdateManyWithoutClientInput
-  token: String
-}
-
 input UserUpdateInput {
   email: String
   fullName: String
@@ -1012,6 +1056,7 @@ input UserUpdateInput {
   phone: String
   role: String
   bookings: BookingUpdateManyWithoutClientInput
+  ad: AdUpdateOneWithoutHostInput
   token: String
 }
 
@@ -1024,10 +1069,10 @@ input UserUpdateManyMutationInput {
   token: String
 }
 
-input UserUpdateOneRequiredInput {
-  create: UserCreateInput
-  update: UserUpdateDataInput
-  upsert: UserUpsertNestedInput
+input UserUpdateOneRequiredWithoutAdInput {
+  create: UserCreateWithoutAdInput
+  update: UserUpdateWithoutAdDataInput
+  upsert: UserUpsertWithoutAdInput
   connect: UserWhereUniqueInput
 }
 
@@ -1038,18 +1083,29 @@ input UserUpdateOneRequiredWithoutBookingsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateWithoutAdDataInput {
+  email: String
+  fullName: String
+  password: String
+  phone: String
+  role: String
+  bookings: BookingUpdateManyWithoutClientInput
+  token: String
+}
+
 input UserUpdateWithoutBookingsDataInput {
   email: String
   fullName: String
   password: String
   phone: String
   role: String
+  ad: AdUpdateOneWithoutHostInput
   token: String
 }
 
-input UserUpsertNestedInput {
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
+input UserUpsertWithoutAdInput {
+  update: UserUpdateWithoutAdDataInput!
+  create: UserCreateWithoutAdInput!
 }
 
 input UserUpsertWithoutBookingsInput {
@@ -1145,6 +1201,7 @@ input UserWhereInput {
   bookings_every: BookingWhereInput
   bookings_some: BookingWhereInput
   bookings_none: BookingWhereInput
+  ad: AdWhereInput
   token: String
   token_not: String
   token_in: [String!]

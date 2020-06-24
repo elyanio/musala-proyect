@@ -13,3 +13,7 @@ directive @default(
   value: DefaultValue,
 ) on OBJECT | FIELD_DEFINITION
 directive @unique on OBJECT | FIELD_DEFINITION
+
+directive @relation(
+  link: String,
+) on OBJECT | FIELD_DEFINITION
