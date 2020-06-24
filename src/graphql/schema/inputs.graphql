@@ -26,6 +26,6 @@ input UpdateAvailableInput {
 }
 
 enum OpsEnum {
-  BLOCK
-  FREE
+  BLOCKED
+  AVAILABLE
 }

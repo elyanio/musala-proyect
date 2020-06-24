@@ -4,7 +4,7 @@ import signIn from './signIn';
 import signUp from './signUp';
 import updateBlockedDay from './updateBlockedDay';
 import deleteBlockedDay from './deleteBlockedDay';
-import updateAvailable from './updateAvailable';
+import updateAvailability from './updateAvailability';
 
 const Mutation: MutationResolvers.Type = {
   signIn,
@@ -12,7 +12,7 @@ const Mutation: MutationResolvers.Type = {
   createBooking,
   updateBlockedDay,
   deleteBlockedDay,
-  updateAvailable,
+  updateAvailability,
 };
 
 export default Mutation;

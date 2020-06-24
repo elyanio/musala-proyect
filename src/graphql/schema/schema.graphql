@@ -16,5 +16,5 @@ type Mutation {
   createBooking(data: BookingInput!): Booking!
   updateBlockedDay(data: BlockedDayUpdateInput!, where: BlockedDayWhereUniqueInput!): BlockedDay
   deleteBlockedDay(where: BlockedDayWhereUniqueInput!): BlockedDay
-  updateAvailable(data: UpdateAvailableInput!): Boolean!
+  updateAvailability(data: UpdateAvailableInput!): Boolean!
 }

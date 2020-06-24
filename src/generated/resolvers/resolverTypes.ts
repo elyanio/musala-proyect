@@ -19,7 +19,7 @@ export type AdOrderByInput =
   | 'ranking_DESC'
   | 'createdAt_ASC'
   | 'createdAt_DESC';
-export type OpsEnum = 'BLOCK' | 'FREE';
+export type OpsEnum = 'BLOCKED' | 'AVAILABLE';
 
 export namespace QueryResolvers {
   export const defaultResolvers = {};
@@ -2015,7 +2015,7 @@ export namespace MutationResolvers {
     where: BlockedDayWhereUniqueInput;
   }
 
-  export interface ArgsUpdateAvailable {
+  export interface ArgsUpdateAvailability {
     data: UpdateAvailableInput;
   }
 
@@ -2104,10 +2104,10 @@ export namespace MutationResolvers {
         ) => BlockedDay | null | Promise<BlockedDay | null>;
       };
 
-  export type UpdateAvailableResolver =
+  export type UpdateAvailabilityResolver =
     | ((
         parent: undefined,
-        args: ArgsUpdateAvailable,
+        args: ArgsUpdateAvailability,
         ctx: Context,
         info: GraphQLResolveInfo,
       ) => boolean | Promise<boolean>)
@@ -2115,7 +2115,7 @@ export namespace MutationResolvers {
         fragment: string;
         resolve: (
           parent: undefined,
-          args: ArgsUpdateAvailable,
+          args: ArgsUpdateAvailability,
           ctx: Context,
           info: GraphQLResolveInfo,
         ) => boolean | Promise<boolean>;
@@ -2207,10 +2207,10 @@ export namespace MutationResolvers {
           ) => BlockedDay | null | Promise<BlockedDay | null>;
         };
 
-    updateAvailable:
+    updateAvailability:
       | ((
           parent: undefined,
-          args: ArgsUpdateAvailable,
+          args: ArgsUpdateAvailability,
           ctx: Context,
           info: GraphQLResolveInfo,
         ) => boolean | Promise<boolean>)
@@ -2218,7 +2218,7 @@ export namespace MutationResolvers {
           fragment: string;
           resolve: (
             parent: undefined,
-            args: ArgsUpdateAvailable,
+            args: ArgsUpdateAvailability,
             ctx: Context,
             info: GraphQLResolveInfo,
           ) => boolean | Promise<boolean>;

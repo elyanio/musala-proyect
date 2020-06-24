@@ -7,14 +7,14 @@ import { DATE_FORMAT } from '../../../utils/constants';
 import { OpsEnum } from '../../../model/enums';
 import { BlockedDay, Prisma } from '../../../generated/prisma-client';
 
-const updateAvailable = async (
+const updateAvailability = async (
   _: undefined,
   {
     data: { checkin, checkout, adId, ops },
-  }: MutationResolvers.ArgsUpdateAvailable,
+  }: MutationResolvers.ArgsUpdateAvailability,
   { prisma }: Context,
 ): Promise<boolean> => {
-  if (ops === OpsEnum.BLOCK) {
+  if (ops === OpsEnum.BLOCKED) {
     await prisma.createBlockedDay({
       ad: { connect: { id: adId } },
       checkin,
@@ -42,7 +42,7 @@ const updateAvailable = async (
   return true;
 };
 
-export default updateAvailable;
+export default updateAvailability;
 
 const putFreeOneOverlapDay = async ({
   prisma,

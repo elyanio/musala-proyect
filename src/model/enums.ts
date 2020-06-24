@@ -11,6 +11,6 @@ export enum ModelEnum {
 }
 
 export enum OpsEnum {
-  'BLOCK' = 'BLOCK',
-  'FREE' = 'FREE',
+  'BLOCKED' = 'BLOCKED',
+  'AVAILABLE' = 'AVAILABLE',
 }
