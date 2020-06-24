@@ -19,6 +19,7 @@ export type AdOrderByInput =
   | 'ranking_DESC'
   | 'createdAt_ASC'
   | 'createdAt_DESC';
+export type OpsEnum = 'BLOCKED' | 'AVAILABLE';
 
 export namespace QueryResolvers {
   export const defaultResolvers = {};
@@ -1622,6 +1623,12 @@ export namespace MutationResolvers {
   export interface BlockedDayWhereUniqueInput {
     id?: string | null;
   }
+  export interface UpdateAvailableInput {
+    checkin: string;
+    checkout: string;
+    ops: OpsEnum;
+    adId: string;
+  }
   export interface AdUpdateOneRequiredWithoutBlockedDaysInput {
     create?: AdCreateWithoutBlockedDaysInput | null;
     update?: AdUpdateWithoutBlockedDaysDataInput | null;
@@ -2008,6 +2015,10 @@ export namespace MutationResolvers {
     where: BlockedDayWhereUniqueInput;
   }
 
+  export interface ArgsUpdateAvailability {
+    data: UpdateAvailableInput;
+  }
+
   export type SignInResolver =
     | ((
         parent: undefined,
@@ -2091,6 +2102,23 @@ export namespace MutationResolvers {
           ctx: Context,
           info: GraphQLResolveInfo,
         ) => BlockedDay | null | Promise<BlockedDay | null>;
+      };
+
+  export type UpdateAvailabilityResolver =
+    | ((
+        parent: undefined,
+        args: ArgsUpdateAvailability,
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => boolean | Promise<boolean>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: undefined,
+          args: ArgsUpdateAvailability,
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => boolean | Promise<boolean>;
       };
 
   export interface Type {
@@ -2177,6 +2205,23 @@ export namespace MutationResolvers {
             ctx: Context,
             info: GraphQLResolveInfo,
           ) => BlockedDay | null | Promise<BlockedDay | null>;
+        };
+
+    updateAvailability:
+      | ((
+          parent: undefined,
+          args: ArgsUpdateAvailability,
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => boolean | Promise<boolean>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: undefined,
+            args: ArgsUpdateAvailability,
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => boolean | Promise<boolean>;
         };
   }
 }

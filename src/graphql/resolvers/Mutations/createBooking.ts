@@ -3,6 +3,7 @@ import { MutationResolvers } from '../../../generated/resolvers/resolverTypes';
 import CustomError from '../../../model/error/CustomError';
 import { Context } from '../../../context';
 import { Booking } from '../../../generated/prisma-client';
+import overlapBlockedDays from '../../../utils/blockedDays';
 
 const createBooking = async (
   _: undefined,
@@ -11,20 +12,7 @@ const createBooking = async (
   }: MutationResolvers.ArgsCreateBooking,
   { prisma }: Context,
 ): Promise<Booking> => {
-  const overlapDays = await prisma.ad({ id: adId }).blockedDays({
-    where: {
-      NOT: [
-        {
-          OR: [
-            {
-              checkout_lt: checkin,
-            },
-            { checkin_gt: checkout },
-          ],
-        },
-      ],
-    },
-  });
+  const overlapDays = await overlapBlockedDays(prisma, adId, checkin, checkout);
   if (overlapDays.length > 0) throw new CustomError('OVERLAP_BOOKING');
   const price = (await prisma.ad({ id: adId }))?.price;
   if (!price) throw new CustomError('AD_NOT_FOUND');
