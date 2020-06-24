@@ -207,6 +207,7 @@ export namespace QueryResolvers {
     bookings_every?: BookingWhereInput | null;
     bookings_some?: BookingWhereInput | null;
     bookings_none?: BookingWhereInput | null;
+    ad?: AdWhereInput | null;
     token?: string | null;
     token_not?: string | null;
     token_in?: string[] | null;
@@ -583,6 +584,23 @@ export namespace UserResolvers {
         ) => Booking[] | Promise<Booking[]>;
       };
 
+  export type AdResolver =
+    | ((
+        parent: User,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => Ad | null | Promise<Ad | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: User,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => Ad | null | Promise<Ad | null>;
+      };
+
   export type TokenResolver =
     | ((
         parent: User,
@@ -735,6 +753,23 @@ export namespace UserResolvers {
             ctx: Context,
             info: GraphQLResolveInfo,
           ) => Booking[] | Promise<Booking[]>;
+        };
+
+    ad:
+      | ((
+          parent: User,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => Ad | null | Promise<Ad | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: User,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => Ad | null | Promise<Ad | null>;
         };
 
     token:
@@ -1642,7 +1677,7 @@ export namespace MutationResolvers {
     image: string;
     price: number;
     ranking: number;
-    host: UserCreateOneInput;
+    host: UserCreateOneWithoutAdInput;
     bookings?: BookingCreateManyWithoutAdInput | null;
   }
   export interface AdUpdateWithoutBlockedDaysDataInput {
@@ -1651,7 +1686,7 @@ export namespace MutationResolvers {
     image?: string | null;
     price?: number | null;
     ranking?: number | null;
-    host?: UserUpdateOneRequiredInput | null;
+    host?: UserUpdateOneRequiredWithoutAdInput | null;
     bookings?: BookingUpdateManyWithoutAdInput | null;
   }
   export interface AdUpsertWithoutBlockedDaysInput {
@@ -1661,18 +1696,18 @@ export namespace MutationResolvers {
   export interface AdWhereUniqueInput {
     id?: string | null;
   }
-  export interface UserCreateOneInput {
-    create?: UserCreateInput | null;
+  export interface UserCreateOneWithoutAdInput {
+    create?: UserCreateWithoutAdInput | null;
     connect?: UserWhereUniqueInput | null;
   }
   export interface BookingCreateManyWithoutAdInput {
     create?: BookingCreateWithoutAdInput[] | null;
     connect?: BookingWhereUniqueInput[] | null;
   }
-  export interface UserUpdateOneRequiredInput {
-    create?: UserCreateInput | null;
-    update?: UserUpdateDataInput | null;
-    upsert?: UserUpsertNestedInput | null;
+  export interface UserUpdateOneRequiredWithoutAdInput {
+    create?: UserCreateWithoutAdInput | null;
+    update?: UserUpdateWithoutAdDataInput | null;
+    upsert?: UserUpsertWithoutAdInput | null;
     connect?: UserWhereUniqueInput | null;
   }
   export interface BookingUpdateManyWithoutAdInput {
@@ -1686,7 +1721,7 @@ export namespace MutationResolvers {
     deleteMany?: BookingScalarWhereInput[] | null;
     updateMany?: BookingUpdateManyWithWhereNestedInput[] | null;
   }
-  export interface UserCreateInput {
+  export interface UserCreateWithoutAdInput {
     id?: string | null;
     email: string;
     fullName: string;
@@ -1711,7 +1746,7 @@ export namespace MutationResolvers {
   export interface BookingWhereUniqueInput {
     id?: string | null;
   }
-  export interface UserUpdateDataInput {
+  export interface UserUpdateWithoutAdDataInput {
     email?: string | null;
     fullName?: string | null;
     password?: string | null;
@@ -1720,9 +1755,9 @@ export namespace MutationResolvers {
     bookings?: BookingUpdateManyWithoutClientInput | null;
     token?: string | null;
   }
-  export interface UserUpsertNestedInput {
-    update: UserUpdateDataInput;
-    create: UserCreateInput;
+  export interface UserUpsertWithoutAdInput {
+    update: UserUpdateWithoutAdDataInput;
+    create: UserCreateWithoutAdInput;
   }
   export interface BookingUpdateWithWhereUniqueWithoutAdInput {
     where: BookingWhereUniqueInput;
@@ -1843,6 +1878,7 @@ export namespace MutationResolvers {
     password: string;
     phone: string;
     role: string;
+    ad?: AdCreateOneWithoutHostInput | null;
     token?: string | null;
   }
   export interface BookingUpdateWithWhereUniqueWithoutClientInput {
@@ -1864,6 +1900,10 @@ export namespace MutationResolvers {
     create?: AdCreateWithoutBookingsInput | null;
     connect?: AdWhereUniqueInput | null;
   }
+  export interface AdCreateOneWithoutHostInput {
+    create?: AdCreateWithoutHostInput | null;
+    connect?: AdWhereUniqueInput | null;
+  }
   export interface BookingUpdateWithoutClientDataInput {
     checkin?: string | null;
     checkout?: string | null;
@@ -1877,6 +1917,7 @@ export namespace MutationResolvers {
     password?: string | null;
     phone?: string | null;
     role?: string | null;
+    ad?: AdUpdateOneWithoutHostInput | null;
     token?: string | null;
   }
   export interface UserUpsertWithoutBookingsInput {
@@ -1890,13 +1931,31 @@ export namespace MutationResolvers {
     image: string;
     price: number;
     ranking: number;
-    host: UserCreateOneInput;
+    host: UserCreateOneWithoutAdInput;
+    blockedDays?: BlockedDayCreateManyWithoutAdInput | null;
+  }
+  export interface AdCreateWithoutHostInput {
+    id?: string | null;
+    title: string;
+    description: string;
+    image: string;
+    price: number;
+    ranking: number;
+    bookings?: BookingCreateManyWithoutAdInput | null;
     blockedDays?: BlockedDayCreateManyWithoutAdInput | null;
   }
   export interface AdUpdateOneRequiredWithoutBookingsInput {
     create?: AdCreateWithoutBookingsInput | null;
     update?: AdUpdateWithoutBookingsDataInput | null;
     upsert?: AdUpsertWithoutBookingsInput | null;
+    connect?: AdWhereUniqueInput | null;
+  }
+  export interface AdUpdateOneWithoutHostInput {
+    create?: AdCreateWithoutHostInput | null;
+    update?: AdUpdateWithoutHostDataInput | null;
+    upsert?: AdUpsertWithoutHostInput | null;
+    delete?: boolean | null;
+    disconnect?: boolean | null;
     connect?: AdWhereUniqueInput | null;
   }
   export interface BlockedDayCreateManyWithoutAdInput {
@@ -1909,12 +1968,25 @@ export namespace MutationResolvers {
     image?: string | null;
     price?: number | null;
     ranking?: number | null;
-    host?: UserUpdateOneRequiredInput | null;
+    host?: UserUpdateOneRequiredWithoutAdInput | null;
     blockedDays?: BlockedDayUpdateManyWithoutAdInput | null;
   }
   export interface AdUpsertWithoutBookingsInput {
     update: AdUpdateWithoutBookingsDataInput;
     create: AdCreateWithoutBookingsInput;
+  }
+  export interface AdUpdateWithoutHostDataInput {
+    title?: string | null;
+    description?: string | null;
+    image?: string | null;
+    price?: number | null;
+    ranking?: number | null;
+    bookings?: BookingUpdateManyWithoutAdInput | null;
+    blockedDays?: BlockedDayUpdateManyWithoutAdInput | null;
+  }
+  export interface AdUpsertWithoutHostInput {
+    update: AdUpdateWithoutHostDataInput;
+    create: AdCreateWithoutHostInput;
   }
   export interface BlockedDayCreateWithoutAdInput {
     id?: string | null;
