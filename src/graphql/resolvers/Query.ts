@@ -1,11 +1,17 @@
 import { Context } from '../../context';
 import { QueryResolvers } from '../../generated/resolvers/resolverTypes';
-import { AdWhereUniqueInput } from '../../generated/prisma-client';
+import {
+  AdWhereUniqueInput,
+  AdOrderByInput,
+} from '../../generated/prisma-client';
 
 const Query: QueryResolvers.Type = {
   currentUser: (_, __: {}, { currentUser }: Context) => currentUser,
-  ads: (_, args: {}, { prisma }: Context) =>
-    prisma.ads({ ...args, orderBy: 'ranking_DESC' }),
+  ads: (
+    _,
+    { orderBy = 'ranking_DESC', ...rest }: QueryResolvers.ArgsAds,
+    { prisma }: Context,
+  ) => prisma.ads({ ...rest, orderBy } as { orderBy: AdOrderByInput }),
   ad: (_, args: QueryResolvers.ArgsAd, { prisma }: Context) =>
     prisma.ad(args.where as AdWhereUniqueInput),
 };
