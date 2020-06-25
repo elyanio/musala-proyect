@@ -1,6 +1,6 @@
 # auth directives
 directive @hasRole(
-  role: Role! = USER,
+  role: Role! = CLIENT,
 ) on QUERY | FIELD | MUTATION | FIELD_DEFINITION
 directive @authenticated on QUERY | FIELD | MUTATION | FIELD_DEFINITION
 directive @isOwner(type: ModelTypes!) on QUERY | FIELD | MUTATION | FIELD_DEFINITION

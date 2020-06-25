@@ -1,6 +1,6 @@
 enum Role {
   HOST
-  USER
+  CLIENT
 }
 
 enum ModelTypes {

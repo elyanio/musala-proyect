@@ -1,6 +1,6 @@
 export enum RolesEnum {
   'HOST' = 'HOST',
-  'USER' = 'USER',
+  'CLIENT' = 'CLIENT',
 }
 
 export enum ModelEnum {

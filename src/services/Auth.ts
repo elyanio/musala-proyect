@@ -25,13 +25,13 @@ const authService = {
     CryptoJS.AES.encrypt(
       text,
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      process.env.CRYPT_ROUNDS!,
+      process.env.CRYPTO_JS_SECRET!,
     ).toString(),
   decrypt: (text: string): string =>
     CryptoJS.AES.decrypt(
       text,
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      process.env.CRYPT_ROUNDS!,
+      process.env.CRYPTO_JS_SECRET!,
     ).toString(),
   hash: async (text: string): Promise<string> => {
     // eslint-disable-next-line radix
