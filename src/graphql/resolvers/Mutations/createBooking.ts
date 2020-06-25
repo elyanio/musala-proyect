@@ -28,7 +28,7 @@ const createBooking = async (
   });
   await prisma.createBlockedDay({
     checkin,
-    checkout,
+    checkout: moment(checkout).subtract(1, 'days').toDate(),
     byBooking: true,
     ad: { connect: { id: adId } },
   });
