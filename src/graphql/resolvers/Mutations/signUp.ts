@@ -11,8 +11,8 @@ const signUp = async (
 ): Promise<User> => {
   const exist = await prisma.$exists.user({ email });
   if (exist) throw new CustomError('DUPLICATED_USER');
-  const planPassword = services.auth.decrypt(password);
-  const hash = await services.auth.hash(planPassword);
+  const plainPassword = services.auth.decrypt(password);
+  const hash = await services.auth.hash(plainPassword);
   const user = await prisma.createUser({ ...data, password: hash, role: RolesEnum.USER });
   const token = services.auth.tokenFromId(user?.id);
   const authenticatedUser = prisma.updateUser({

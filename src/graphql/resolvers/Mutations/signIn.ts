@@ -10,8 +10,8 @@ const signIn = async (
 ): Promise<User> => {
   const user = await prisma.user({ email });
   if (!user) throw new CustomError('INVALID_SING_IN');
-  const planPassword = services.auth.decrypt(password);
-  const compare = await services.auth.compare(planPassword, user.password);
+  const plainPassword = services.auth.decrypt(password);
+  const compare = await services.auth.compare(plainPassword, user.password);
   if (!compare) throw new CustomError('INVALID_SING_IN');
   const token = services.auth.tokenFromId(user?.id);
   const authenticatedUser = prisma.updateUser({
