@@ -24,19 +24,20 @@ const authService = {
   crypt: (text: string): string =>
     CryptoJS.AES.encrypt(
       text,
-      process.env.B_CRYPT_SALT || 'ijfw9-48etfw',
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      process.env.CRYPT_ROUNDS!,
     ).toString(),
   decrypt: (text: string): string =>
     CryptoJS.AES.decrypt(
       text,
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      process.env.B_CRYPT_SALT!,
+      process.env.CRYPT_ROUNDS!,
     ).toString(),
   hash: async (text: string): Promise<string> => {
     // eslint-disable-next-line radix
     const rounds = parseInt(
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      process.env.BCRYPT_PASSWORD_SALT!,
+      process.env.CRYPT_ROUNDS!,
     );
     const salt = await bcrypt.genSalt(rounds);
     return bcrypt.hash(text, salt);
