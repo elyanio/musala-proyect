@@ -1,11 +1,8 @@
+import CryptoJS from 'crypto-js';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
-interface AuthService {
-  idFromToken: (token?: string) => string | undefined;
-  tokenFromId: (id: string | undefined) => string | undefined;
-}
-
-const AuthService = {
+const authService = {
   idFromToken: (token?: string): string | null => {
     if (!token) return null;
     let sign;
@@ -23,7 +20,29 @@ const AuthService = {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const secret = process.env.APP_SECRET!;
     return jwt.sign({ id }, secret);
-  }
+  },
+  crypt: (text: string): string =>
+    CryptoJS.AES.encrypt(
+      text,
+      process.env.B_CRYPT_SALT || 'ijfw9-48etfw',
+    ).toString(),
+  decrypt: (text: string): string =>
+    CryptoJS.AES.decrypt(
+      text,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      process.env.B_CRYPT_SALT!,
+    ).toString(),
+  hash: async (text: string): Promise<string> => {
+    // eslint-disable-next-line radix
+    const rounds = parseInt(
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      process.env.BCRYPT_PASSWORD_SALT!,
+    );
+    const salt = await bcrypt.genSalt(rounds);
+    return bcrypt.hash(text, salt);
+  },
+  compare: (text: string, hash: string): Promise<boolean> =>
+    bcrypt.compare(text, hash),
 };
 
-export default AuthService;
+export default authService;
