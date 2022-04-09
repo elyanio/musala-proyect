@@ -84,7 +84,7 @@
     "http": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
-    "moment": "^2.27.0",
+    "moment": "^2.29.2",
     "prisma-client-lib": "^1.34.10"
   }
 }
